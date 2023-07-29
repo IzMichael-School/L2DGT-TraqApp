@@ -1,7 +1,7 @@
 import PocketBase from 'pocketbase';
 import { writable } from 'svelte/store';
 
-export const pb = new PocketBase('https://server.loqui.izmichael.com');
+export const pb = new PocketBase('https://db.traq.izmichael.com');
 pb.autoCancellation(false);
 
 export const currentUser = writable<User>(pb.authStore.model as unknown as User);
