@@ -13,3 +13,7 @@ export function generatePassword(length: number): string {
     }
     return retVal;
 }
+
+import { writable } from 'svelte/store';
+// State indicator for when any popups are visible
+export const poppedup = writable(false);

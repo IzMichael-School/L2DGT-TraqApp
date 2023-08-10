@@ -12,6 +12,10 @@ module.exports = {
                     'lightgrey': '#878C9C',
                     'grey': '#363844',
                 }
+            },
+            boxShadow: {
+                'elevate': '0 0 20px 10px rgb(0, 0, 0, 0.15)',
+                'elevate-sm': '0 0 10px 5px rgb(0, 0, 0, 0.15)'
             }
         },
         fontFamily: {
