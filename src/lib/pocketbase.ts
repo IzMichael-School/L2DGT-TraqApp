@@ -5,22 +5,34 @@ export const pb = new PocketBase('https://db.traq.izmichael.com');
 pb.autoCancellation(false);
 
 export const currentUser = writable<User>(pb.authStore.model as unknown as User);
-
-// currentUser.subscribe((e) => {
-//     console.log(e);
-// });
+export const workspace = writable<Workspace>();
+export const saving = writable<boolean>(false);
 
 if (pb.authStore.model?.id) {
     pb.collection('users').subscribe(pb.authStore.model.id, (e) => {
         currentUser.set(e.record as unknown as User);
     });
+
+    const workspaces = await pb.collection('workspaces').getFullList<Workspace>();
+    workspace.set(workspaces[0]);
 }
+
+workspace.subscribe(async (val) => {
+    saving.set(true);
+    if (!val?.id) return;
+    await pb.collection('workspaces').update(val.id, val);
+    saving.set(false);
+    // const workspaces = await pb.collection('workspaces').getFullList<Workspace>();
+    // const chosen = workspaces.find((a) => a.id == val.id);
+    // if (chosen?.id) workspace.set(chosen);
+});
+
+saving.subscribe((val) => console.log(val ? 'Saving' : 'Saved'));
 
 // SQL Field Types
 
 export type IsoDateString = string;
 export type RecordIdString = string;
-export type HTMLString = string;
 
 // System fields
 
@@ -29,7 +41,7 @@ export type BaseSystemFields<T = never> = {
     created: IsoDateString;
     updated: IsoDateString;
     collectionId: string;
-    collectionName: 'channels' | 'messages' | 'users';
+    collectionName: 'workspaces' | 'users';
     expand?: T;
 };
 
@@ -42,50 +54,69 @@ export type AuthSystemFields<T = never> = {
 
 // Record types for each collection
 
-export type ChannelsRecord = {
-    type?: 'direct' | 'group';
-    name?: string;
-    creator?: RecordIdString;
-    members?: RecordIdString[];
-};
-
-export type MessagesRecord = {
-    content?: string;
-    timestamp?: IsoDateString;
-    author?: RecordIdString;
-    channel?: RecordIdString;
-    state?: 'sent' | 'delivered';
+export type WorkspacesRecord = {
+    owner: RecordIdString;
+    name: string;
+    tasks: Task[];
+    habits: Habit[];
+    tags: Tag[];
+    tasklists: TaskList[];
 };
 
 export type UsersRecord = {
     avatar?: string;
-    nickname?: string;
-    lastseen?: IsoDateString;
-    activity?: 'auto' | 'dnd' | 'ghost';
-    viewhistory: { [id: string]: IsoDateString };
-    appscale: number;
-    windowsize: string;
-    windowresize: boolean;
-    alwaysontop: boolean;
-    addresses: string[];
+    preferences: {
+        dateFormat: string;
+    };
 };
 
 // Response types include system fields and match responses from the PocketBase API
 
-export type Channel<Texpand = unknown> = Required<ChannelsRecord> & BaseSystemFields<Texpand>;
-export type Message<Texpand = unknown> = Required<MessagesRecord> & BaseSystemFields<Texpand>;
+export type Workspace<Texpand = unknown> = Required<WorkspacesRecord> & BaseSystemFields<Texpand>;
 export type User<Texpand = unknown> = Required<UsersRecord> & AuthSystemFields<Texpand>;
 
 // Types containing all Records and Responses, useful for creating typing helper functions
 
 export type CollectionRecords = {
-    channels: ChannelsRecord;
-    messages: MessagesRecord;
+    workspaces: WorkspacesRecord;
     users: UsersRecord;
 };
 
 export type CollectionResponses = {
-    channels: Channel;
-    messages: Message;
+    workspaces: Workspace;
     users: User;
+};
+
+// Item Types
+
+export type Trackable = {
+    id: RecordIdString;
+    name: string;
+    progress: 0 | 0.5 | 1;
+    notes: string;
+    tags: RecordIdString[];
+};
+
+export type Task = Trackable & {
+    parent?: RecordIdString;
+    duedate: IsoDateString;
+    list: RecordIdString;
+};
+
+export type Habit = Trackable & {
+    frequency: {
+        start: IsoDateString;
+        days: number;
+    };
+};
+
+export type Tag = {
+    id: RecordIdString;
+    name: string;
+    color: string;
+};
+
+export type TaskList = {
+    id: RecordIdString;
+    name: string;
 };
