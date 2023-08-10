@@ -6,12 +6,13 @@
     let xclass: string | undefined;
 
     const variants = {
-        default: 'bg-brand-primary text-white hover:brightness-90 group-hover:brightness-90',
+        default: 'bg-brand-blue text-white hover:brightness-90 group-hover:brightness-90',
         secondary: 'bg-gray-200 text-black hover:brightness-90 group-hover:brightness-90',
         danger: 'bg-brand-red text-white hover:bg-red-600 group-hover:bg-red-600',
         outline:
             'bg-transparent border border-gray-400 hover:bg-gray-100 group-hover:bg-gray-100 hover:border-gray-900 group-hover:border-gray-900',
         ghost: 'bg-transparent hover:bg-gray-100 group-hover:bg-gray-100',
+        unstyled: '',
     };
 </script>
 
