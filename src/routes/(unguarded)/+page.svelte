@@ -3,8 +3,8 @@
     import { goto } from '$app/navigation';
 </script>
 
-<Button variant="default" action={() => goto('/login')}>Login</Button>
-<Button variant="default" action={() => goto('/register')}>Register</Button>
+<Button variant="default" on:click={() => goto('/login')}>Login</Button>
+<Button variant="default" on:click={() => goto('/register')}>Register</Button>
 
 <style>
 </style>

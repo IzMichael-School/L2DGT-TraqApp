@@ -1,9 +1,11 @@
 <script lang="ts">
-    export let action: (() => unknown) | undefined = undefined,
-        variant: keyof typeof variants = 'default',
+    export let variant: keyof typeof variants = 'default',
         nominwidth: boolean | undefined = undefined;
     export { xclass as class };
     let xclass: string | undefined;
+
+    import { createEventDispatcher } from 'svelte';
+    const dispatch = createEventDispatcher();
 
     const variants = {
         default: 'bg-brand-blue text-white hover:brightness-90 group-hover:brightness-90',
@@ -23,7 +25,7 @@
         variant
     ]} {xclass}"
     on:click={() => {
-        if (action != undefined) action();
+        dispatch('click');
     }}
 >
     <slot />

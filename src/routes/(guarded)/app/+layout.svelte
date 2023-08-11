@@ -17,8 +17,8 @@
             <h1 class="text-4xl font-bold text-white">TRAQ</h1>
         </div>
 
-        <Button variant="default" class="mb-3 w-full text-lg" action={() => goto('/app/tasks')}>Tasks</Button>
-        <Button variant="default" class="mb-3 w-full text-lg" action={() => goto('/app/habits')}>Habits</Button>
+        <Button variant="default" class="mb-3 w-full text-lg" on:click={() => goto('/app/tasks')}>Tasks</Button>
+        <Button variant="default" class="mb-3 w-full text-lg" on:click={() => goto('/app/habits')}>Habits</Button>
 
         <div class="w-0 flex-1 overflow-hidden" />
 

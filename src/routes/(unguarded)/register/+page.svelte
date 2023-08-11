@@ -70,9 +70,9 @@
         subtitleClass="w-full"
         secret
     />
-    <Button class="mt-5 w-full" variant={loading ? 'secondary' : 'default'}
-        >{loading ? 'Loading...' : 'Register'}</Button
-    >
+    <Button class="mt-5 w-full" variant={loading ? 'secondary' : 'default'}>
+        {loading ? 'Loading...' : 'Register'}
+    </Button>
 
     {#if form?.error}
         <p class="mt-5 w-full text-center font-bold text-red-700">{form.error}</p>

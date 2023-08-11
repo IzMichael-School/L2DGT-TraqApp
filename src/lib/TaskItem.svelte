@@ -42,7 +42,7 @@
     <button
         on:click={() => setProgress(1)}
         on:contextmenu|preventDefault|stopPropagation={() => setProgress(0.5)}
-        class="flex aspect-square h-7 w-7 flex-row items-center justify-start overflow-hidden rounded-full border-2 {task.progress ==
+        class="flex aspect-square h-7 w-7 shrink-0 flex-row items-center justify-start overflow-hidden rounded-full border-2 {task.progress ==
         1
             ? 'border-brand-lightgrey'
             : 'border-black'}"
@@ -101,6 +101,7 @@
 
         <ContextMenuButton
             on:click={() => {
+                if (!confirm('Are you sure you want to delete this task?')) return;
                 let ref = $workspace.tasks.findIndex((a) => a.id == task.id);
                 if (ref > -1) {
                     $workspace.tasks.splice(ref, 1);
