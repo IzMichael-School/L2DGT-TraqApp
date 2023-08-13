@@ -120,3 +120,42 @@ export type TaskList = {
     id: RecordIdString;
     name: string;
 };
+
+// Object Templates
+
+export const templates: {
+    task: Task;
+} = {
+    task: {
+        id: genId(15),
+        list: '',
+        name: '',
+        notes: '',
+        parent: '',
+        duedate: '',
+        progress: 0,
+        tags: [],
+    },
+};
+
+export function newTask(override?: object) {
+    const task = templates.task;
+    task.id = genId(15);
+    return {
+        ...task,
+        ...override,
+    };
+}
+
+// Helper Functions
+function genId(length: number) {
+    let result = '';
+    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    const charactersLength = characters.length;
+    let counter = 0;
+    while (counter < length) {
+        result += characters.charAt(Math.floor(Math.random() * charactersLength));
+        counter += 1;
+    }
+    return result;
+}

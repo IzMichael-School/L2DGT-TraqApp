@@ -9,7 +9,9 @@
     import ContextMenu from '$lib/ContextMenu.svelte';
     import ContextMenuButton from '$lib/ContextMenuButton.svelte';
 
-    export let task: Task;
+    export let task: Task,
+        noninteractive = false,
+        nochildren = false;
     let element: HTMLDivElement,
         menu: HTMLDivElement,
         showMenu = false;
@@ -25,6 +27,7 @@
 
 <svelte:window
     on:mousedown={(e) => {
+        if (noninteractive) return false;
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore next-line
         if (element && menu && !element.contains(e.target) && !menu.contains(e.target))
@@ -36,12 +39,19 @@
     class="group my-1 flex h-11 w-full cursor-pointer flex-row items-center justify-start gap-3 px-2 py-1"
     bind:this={element}
     on:contextmenu|preventDefault={() => {
+        if (noninteractive) return false;
         if (!$poppedup) (showMenu = true), ($poppedup = true);
     }}
 >
     <button
-        on:click={() => setProgress(1)}
-        on:contextmenu|preventDefault|stopPropagation={() => setProgress(0.5)}
+        on:click={() => {
+            if (noninteractive) return false;
+            setProgress(1);
+        }}
+        on:contextmenu|preventDefault|stopPropagation={() => {
+            if (noninteractive) return false;
+            setProgress(0.5);
+        }}
         class="flex aspect-square h-7 w-7 shrink-0 flex-row items-center justify-start overflow-hidden rounded-full border-2 {task.progress ==
         1
             ? 'border-brand-lightgrey'
@@ -53,7 +63,13 @@
         />
     </button>
 
-    <button class="flex flex-1 flex-col items-start justify-center" on:click={() => dispatch('edit', { task: task })}>
+    <button
+        class="flex flex-1 flex-col items-start justify-center"
+        on:click={() => {
+            if (noninteractive) return false;
+            dispatch('edit', { task: task });
+        }}
+    >
         <h4 class="h-7 text-xl group-hover:text-lg {task.progress == 1 ? 'text-brand-lightgrey' : 'text-black'}">
             {task.name}
         </h4>
@@ -116,11 +132,13 @@
     </ContextMenu>
 {/if}
 
-<div class="pl-8">
-    {#each $workspace.tasks.filter((t) => t.parent == task.id) as subtask}
-        <TaskItem task={subtask} on:edit={(e) => dispatch('edit', e.detail)} />
-    {/each}
-</div>
+{#if !nochildren}
+    <div class="w-full pl-8">
+        {#each $workspace.tasks.filter((t) => t.parent == task.id) as subtask (subtask.id)}
+            <TaskItem task={subtask} on:edit={(e) => dispatch('edit', e.detail)} />
+        {/each}
+    </div>
+{/if}
 
 <style>
     * {
