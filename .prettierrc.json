@@ -11,6 +11,7 @@
     "tabWidth": 4,
     "trailingComma": "es5",
     "useTabs": false,
+    "htmlWhitespaceSensitivity": "ignore",
     "plugins": ["prettier-plugin-svelte", "prettier-plugin-tailwindcss"],
     "pluginSearchDirs": false,
     "overrides": [
