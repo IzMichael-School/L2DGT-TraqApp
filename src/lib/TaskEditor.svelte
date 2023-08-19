@@ -3,6 +3,7 @@
     import { workspace, newTask, type Task } from '$lib/pocketbase';
     import dayjs from 'dayjs';
     import SidebarModal from '$lib/SidebarModal.svelte';
+    import ProgressCircle from '$lib/ProgressCircle.svelte';
     import TextInput from '$lib/TextInput.svelte';
     import Button from '$lib/Button.svelte';
     import TaskPicker from '$lib/TaskPicker.svelte';
@@ -19,23 +20,15 @@
         <p class="mb-3 w-full text-left text-sm">Task Name</p>
 
         <div class="my-1 flex w-full flex-row items-center justify-end gap-2 border-b-2 border-black pl-2">
-            <button
+            <ProgressCircle
+                bind:value={task.progress}
                 on:click={() => {
-                    if (task) task.progress = 1;
+                    if (task && task.progress < 1) task.progress += 0.5;
                 }}
-                on:contextmenu|preventDefault|stopPropagation={() => {
-                    if (task) task.progress = 0.5;
+                on:contextmenu={() => {
+                    if (task && task.progress > 0) task.progress -= 0.5;
                 }}
-                class="flex aspect-square h-7 w-7 shrink-0 flex-row items-center justify-start overflow-hidden rounded-full border-2 {task.progress ==
-                1
-                    ? 'border-brand-lightgrey'
-                    : 'border-black'}"
-            >
-                <span
-                    class="block h-full {task.progress == 1 ? 'bg-brand-lightgrey' : 'bg-black'}"
-                    style="width: {task.progress * 100}%;"
-                />
-            </button>
+            />
 
             <select
                 class="w-full min-w-[12rem] rounded-none bg-transparent p-2 font-normal outline-none transition-colors duration-200 ease-in-out hover:bg-gray-100"

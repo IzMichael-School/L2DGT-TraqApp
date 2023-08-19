@@ -5,6 +5,7 @@
     import { createEventDispatcher } from 'svelte';
     import dayjs from 'dayjs';
 
+    import ProgressCircle from '$lib/ProgressCircle.svelte';
     import TaskItem from '$lib/TaskItem.svelte';
     import ContextMenu from '$lib/ContextMenu.svelte';
     import ContextMenuButton from '$lib/ContextMenuButton.svelte';
@@ -18,10 +19,11 @@
 
     const dispatch = createEventDispatcher();
 
-    async function setProgress(value: 0 | 0.5 | 1) {
+    async function setProgress(value: 0 | 0.5 | 1 | number) {
+        $workspace.tasks = $workspace.tasks.sort((a, b) => (a.id > b.id ? 1 : -1));
         let ref = $workspace.tasks.findIndex((a) => a.id == task.id);
-        if (ref > -1) $workspace.tasks[ref].progress = value;
-        task.progress = value;
+        if (ref > -1) $workspace.tasks[ref].progress = value as 0 | 0.5 | 1;
+        task.progress = value as 0 | 0.5 | 1;
     }
 </script>
 
@@ -43,25 +45,17 @@
         if (!$poppedup) (showMenu = true), ($poppedup = true);
     }}
 >
-    <button
+    <ProgressCircle
+        bind:value={task.progress}
         on:click={() => {
             if (noninteractive) return false;
-            setProgress(1);
+            if (task.progress < 1) setProgress((task.progress += 0.5));
         }}
-        on:contextmenu|preventDefault|stopPropagation={() => {
+        on:contextmenu={() => {
             if (noninteractive) return false;
-            setProgress(0.5);
+            if (task.progress > 0) setProgress((task.progress -= 0.5));
         }}
-        class="flex aspect-square h-7 w-7 shrink-0 flex-row items-center justify-start overflow-hidden rounded-full border-2 {task.progress ==
-        1
-            ? 'border-brand-lightgrey'
-            : 'border-black'}"
-    >
-        <span
-            class="block h-full {task.progress == 1 ? 'bg-brand-lightgrey' : 'bg-black'}"
-            style="width: {task.progress * 100}%;"
-        />
-    </button>
+    />
 
     <button
         class="flex flex-1 flex-col items-start justify-center text-left"

@@ -1,6 +1,8 @@
 <script lang="ts">
     import { workspace, newTask, type Task } from '$lib/pocketbase';
     import { onMount } from 'svelte';
+    import { flip } from 'svelte/animate';
+
     import TaskItem from '$lib/TaskItem.svelte';
     import TaskEditor from '$lib/TaskEditor.svelte';
     import Button from '$lib/Button.svelte';
@@ -23,7 +25,9 @@
         {#each $workspace.tasks
             .filter((t) => !t.parent && t.list == tasklist.id)
             .sort(multiSorter(['progress', 'duedate', 'name'])) as task (task.id)}
-            <TaskItem {task} on:edit={(e) => (editingTask = structuredClone(e.detail.task))} />
+            <div animate:flip={{ delay: 400 }}>
+                <TaskItem {task} on:edit={(e) => (editingTask = structuredClone(e.detail.task))} />
+            </div>
         {:else}
             <p class="mb-1">Looks like you don't have any tasks...</p>
         {/each}
