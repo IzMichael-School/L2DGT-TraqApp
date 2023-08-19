@@ -6,7 +6,7 @@
 </script>
 
 <div
-    class="z-[110] flex h-full max-h-full w-1/3 flex-col items-end justify-start overflow-auto rounded-lg bg-white p-5"
+    class="z-[110] flex h-full max-h-full w-full flex-col items-end justify-start overflow-auto rounded-lg bg-white p-5 lg:w-1/3"
     transition:fly={{ x: 500, duration: 600 }}
 >
     <div class="-mb-8 flex h-8 w-full flex-row items-center {xSide == 'left' ? 'justify-start' : 'justify-end'}">

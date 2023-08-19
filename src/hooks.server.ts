@@ -1,9 +1,18 @@
 import { pb } from '$lib/pocketbase';
 import type { Handle } from '@sveltejs/kit';
 
+if (pb.authStore.isValid) {
+    try {
+        await pb.collection('users').authRefresh();
+    } catch (_) {
+        pb.authStore.clear();
+    }
+}
+
 export const handle: Handle = async ({ event, resolve }) => {
     // before
     pb.authStore.loadFromCookie(event.request.headers.get('cookie') || '');
+
     if (pb.authStore.isValid) {
         try {
             await pb.collection('users').authRefresh();

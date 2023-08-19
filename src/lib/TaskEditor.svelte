@@ -115,7 +115,7 @@
             </Button>
             <Button
                 variant="unstyled"
-                class="flex-1 bg-green-600 text-white hover:brightness-90"
+                class="h-full flex-1 bg-green-600 text-white hover:brightness-90"
                 on:click={async () => {
                     let ref = $workspace.tasks.findIndex((a) => a.id == task?.id);
                     if (ref > -1) {

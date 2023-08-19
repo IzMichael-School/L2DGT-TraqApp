@@ -6,25 +6,29 @@ pb.autoCancellation(false);
 
 export const currentUser = writable<User>(pb.authStore.model as unknown as User);
 export const workspace = writable<Workspace>();
-export const saving = writable<boolean>(false);
+export const saving = writable<false | 'working' | 'failed'>(false);
 
-if (pb.authStore.model?.id) {
-    pb.collection('users').subscribe(pb.authStore.model.id, (e) => {
-        currentUser.set(e.record as unknown as User);
-    });
+async function init() {
+    if (pb.authStore.model?.id) {
+        pb.collection('users').subscribe(pb.authStore.model.id, (e) => {
+            currentUser.set(e.record as unknown as User);
+        });
 
-    const workspaces = await pb.collection('workspaces').getFullList<Workspace>();
-    workspace.set(workspaces[0]);
+        const workspaces = await pb.collection('workspaces').getFullList<Workspace>();
+        workspace.set(workspaces[0]);
+    }
 }
+init();
 
 workspace.subscribe(async (val) => {
-    saving.set(true);
     if (!val?.id) return;
-    await pb.collection('workspaces').update(val.id, val);
-    saving.set(false);
-    // const workspaces = await pb.collection('workspaces').getFullList<Workspace>();
-    // const chosen = workspaces.find((a) => a.id == val.id);
-    // if (chosen?.id) workspace.set(chosen);
+    saving.set('working');
+    try {
+        await pb.collection('workspaces').update(val.id, val);
+        saving.set(false);
+    } catch (error) {
+        saving.set('failed');
+    }
 });
 
 saving.subscribe((val) => console.log(val ? 'Saving' : 'Saved'));
