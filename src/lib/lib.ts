@@ -17,3 +17,32 @@ export function generatePassword(length: number): string {
 import { writable } from 'svelte/store';
 // State indicator for when any popups are visible
 export const poppedup = writable(false);
+
+// UI Colouring
+export const color = writable<Color>('paleblue');
+export const colors: Colors = {
+    blue: '#4577CA',
+    paleblue: '#84AECD',
+    red: '#814B5E',
+    green: '#136577',
+    lavender: '#DBE3F5',
+    lightgrey: '#878C9C',
+    grey: '#363844',
+};
+
+export type Color = 'blue' | 'paleblue' | 'red' | 'green' | 'lavender' | 'lightgrey' | 'grey';
+export type Colors = {
+    [key in Color]: string;
+};
+
+export const multiSorter = (fields: string[]) => (a: object, b: object) =>
+    fields
+        .map((o) => {
+            let dir = 1;
+            if (o[0] === '-') {
+                dir = -1;
+                o = o.substring(1);
+            }
+            return a[o] > b[o] ? dir : a[o] < b[o] ? -dir : 0;
+        })
+        .reduce((p, n) => (p ? p : n), 0);

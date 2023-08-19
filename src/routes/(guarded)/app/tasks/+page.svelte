@@ -6,21 +6,26 @@
     import Button from '$lib/Button.svelte';
     import ModalDimmer from '$lib/ModalDimmer.svelte';
 
+    import { color, multiSorter } from '$lib/lib';
+    $color = 'blue';
+
     let editingTask: Task | undefined;
 
     onMount(async () => {
         $workspace.tasklists.sort((a, b) => (a.name > b.name ? 1 : -1));
-        $workspace.tasks.sort((a, b) => (a.duedate || a.name > b.duedate || b.name ? 1 : -1));
     });
 </script>
 
+<h2 class="mb-3 text-2xl font-bold lg:mb-7 lg:text-4xl">My Tasks</h2>
 {#if $workspace?.id}
     {#each $workspace.tasklists as tasklist, i (tasklist.id)}
-        <h2 class="mb-3 text-3xl font-bold {i != 0 ? 'mt-16' : ''}">{tasklist.name}</h2>
-        {#each $workspace.tasks.filter((t) => !t.parent && t.list == tasklist.id) as task (task.id)}
+        <h2 class="mb-1 text-lg font-bold lg:mb-3 lg:text-2xl {i != 0 ? 'mt-8 lg:mt-16' : ''}">{tasklist.name}</h2>
+        {#each $workspace.tasks
+            .filter((t) => !t.parent && t.list == tasklist.id)
+            .sort(multiSorter(['progress', 'duedate', 'name'])) as task (task.id)}
             <TaskItem {task} on:edit={(e) => (editingTask = structuredClone(e.detail.task))} />
         {:else}
-            <h3>Looks like you don't have any tasks...</h3>
+            <p class="mb-1">Looks like you don't have any tasks...</p>
         {/each}
         <button
             class="flex flex-row items-center justify-start rounded-lg p-2 text-gray-500 hover:bg-slate-200"
@@ -31,14 +36,18 @@
                 editingTask = newtask;
             }}
         >
-            <img src="/assets/icons/plus.svg" alt="Plus Icon" class="mr-2 h-7 w-7 opacity-50" />
-            <span class="mr-2">Add a Task</span>
+            <img
+                src="/assets/icons/plus.svg"
+                alt="Plus Icon"
+                class="mr-2 aspect-square h-5 w-5 opacity-50 lg:h-7 lg:w-7"
+            />
+            <span class="mr-2 text-sm lg:text-base">Add a Task</span>
         </button>
     {/each}
 {/if}
 
 {#if $workspace?.id}
-    <div class="absolute top-0 right-0 m-14 flex w-48 flex-col items-end justify-start gap-3">
+    <div class="absolute top-0 right-0 m-14 flex w-48 flex-col items-end justify-start gap-3 max-lg:hidden">
         {#each $workspace.tasklists as tasklist}
             <Button variant="default" class="w-full">{tasklist.name}</Button>
         {/each}

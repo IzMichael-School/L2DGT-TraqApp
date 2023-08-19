@@ -6,6 +6,7 @@ module.exports = {
             colors: {
                 brand: {
                     'blue': '#4577CA',
+                    'paleblue': '#84AECD',
                     'red': '#814B5E',
                     'green': '#136577',
                     'lavender': '#DBE3F5',

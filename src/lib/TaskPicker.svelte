@@ -4,6 +4,7 @@
     import TaskItem from '$lib/TaskItem.svelte';
 
     import { workspace, type Task } from '$lib/pocketbase';
+    import { multiSorter } from '$lib/lib';
     import { onMount } from 'svelte';
     export let value: string | undefined, valueFull: Task | undefined;
 
@@ -23,7 +24,9 @@
 
 {#if showPicker}
     <ModalDimmer on:close={() => (showPicker = false)}>
-        <div class="relative z-[110] flex h-2/3 w-2/3 flex-col items-center justify-start rounded-lg bg-white p-5">
+        <div
+            class="relative z-[110] flex h-full w-full flex-col items-center justify-start rounded-lg bg-white p-5 lg:h-2/3 lg:w-2/3"
+        >
             <h1 class="mb-5 w-full text-center text-xl font-bold">Selecting Task</h1>
             <p class="mb-1 w-full text-left text-sm text-zinc-700">Selected:</p>
             <div class="w-full rounded-md border-2 border-dashed border-zinc-300 p-1">
@@ -43,7 +46,7 @@
                 >
                     Select None
                 </Button>
-                {#each $workspace.tasks as task}
+                {#each $workspace.tasks.sort(multiSorter(['progress', 'duedate', 'name'])) as task}
                     <button
                         class="contents"
                         on:click={() => ((value = task.id), (valueFull = task), (showPicker = false))}

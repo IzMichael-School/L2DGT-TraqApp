@@ -1,6 +1,6 @@
 <script lang="ts">
     import { currentUser, workspace, type Task } from '$lib/pocketbase';
-    import { poppedup } from '$lib/lib';
+    import { poppedup, multiSorter } from '$lib/lib';
 
     import { createEventDispatcher } from 'svelte';
     import dayjs from 'dayjs';
@@ -36,7 +36,7 @@
 />
 
 <div
-    class="group my-1 flex h-11 w-full cursor-pointer flex-row items-center justify-start gap-3 px-2 py-1"
+    class="group my-1 flex h-11 w-full cursor-pointer flex-row items-center justify-start gap-3 py-1 px-2"
     bind:this={element}
     on:contextmenu|preventDefault={() => {
         if (noninteractive) return false;
@@ -64,16 +64,25 @@
     </button>
 
     <button
-        class="flex flex-1 flex-col items-start justify-center"
+        class="flex flex-1 flex-col items-start justify-center text-left"
         on:click={() => {
             if (noninteractive) return false;
             dispatch('edit', { task: task });
         }}
     >
-        <h4 class="h-7 text-xl group-hover:text-lg {task.progress == 1 ? 'text-brand-lightgrey' : 'text-black'}">
+        <h4
+            class="h-6 text-base group-hover:text-sm lg:h-7 lg:text-xl lg:group-hover:text-lg {task.progress == 1
+                ? 'text-brand-lightgrey line-through'
+                : 'text-black'}"
+        >
             {task.name}
         </h4>
-        <p class="h-0 overflow-hidden text-sm italic group-hover:mt-1 group-hover:h-5">
+        <p
+            class="h-0 w-full overflow-hidden text-xs italic group-hover:h-4 max-lg:mb-1 lg:text-sm lg:group-hover:mt-1 lg:group-hover:h-5 {task.progress ==
+            1
+                ? 'text-brand-lightgrey line-through'
+                : 'text-black'}"
+        >
             Due: {dayjs(task.duedate).format($currentUser.preferences.dateFormat)}
             {task.tags.length > 0 ? '-' : ''}
             {task.tags.join(', ')}
@@ -133,8 +142,10 @@
 {/if}
 
 {#if !nochildren}
-    <div class="w-full pl-8">
-        {#each $workspace.tasks.filter((t) => t.parent == task.id) as subtask (subtask.id)}
+    <div class="w-full pl-4 lg:pl-8">
+        {#each $workspace.tasks
+            .filter((t) => t.parent == task.id)
+            .sort(multiSorter(['progress', 'duedate', 'name'])) as subtask (subtask.id)}
             <TaskItem task={subtask} on:edit={(e) => dispatch('edit', e.detail)} />
         {/each}
     </div>
