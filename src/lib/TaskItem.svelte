@@ -38,7 +38,7 @@
 />
 
 <div
-    class="group my-1 flex h-11 w-full cursor-pointer flex-row items-center justify-start gap-3 py-1 px-2"
+    class="group my-1 flex h-11 w-full flex-row items-center justify-start gap-3 py-1 px-2"
     bind:this={element}
     on:contextmenu|preventDefault={() => {
         if (noninteractive) return false;
@@ -58,7 +58,7 @@
     />
 
     <button
-        class="flex flex-1 flex-col items-start justify-center text-left"
+        class="flex flex-1 cursor-pointer flex-col items-start justify-center text-left"
         on:click={() => {
             if (noninteractive) return false;
             dispatch('edit', { task: task });
