@@ -8,6 +8,10 @@
     let loading = false;
 </script>
 
+<svelte:head>
+    <title>Log In | Traq</title>
+</svelte:head>
+
 <form
     method="POST"
     class="flex h-full w-full flex-col items-center justify-center p-5"
@@ -34,4 +38,6 @@
     {#if form?.error}
         <p class="mt-5 w-full text-center font-bold text-red-700">{form.error}</p>
     {/if}
+
+    <!-- <p>{document?.cookie}</p> -->
 </form>

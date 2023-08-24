@@ -11,6 +11,10 @@
         loading = false;
 </script>
 
+<svelte:head>
+    <title>Register | Traq</title>
+</svelte:head>
+
 <form
     method="POST"
     class="flex h-full w-full flex-col items-center justify-start px-5 pt-5"

@@ -18,6 +18,10 @@
     });
 </script>
 
+<svelte:head>
+    <title>Tasks | Traq</title>
+</svelte:head>
+
 <h2 class="mb-3 text-2xl font-bold lg:mb-7 lg:text-4xl">My Tasks</h2>
 {#if $workspace?.id}
     {#each $workspace.tasklists as tasklist, i (tasklist.id)}
