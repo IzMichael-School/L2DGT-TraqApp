@@ -1,5 +1,6 @@
 import PocketBase from 'pocketbase';
 import { writable } from 'svelte/store';
+import dayjs from 'dayjs';
 
 export const pb = new PocketBase('https://db.traq.izmichael.com');
 pb.autoCancellation(false);
@@ -63,6 +64,11 @@ export type WorkspacesRecord = {
     name: string;
     tasks: Task[];
     habits: Habit[];
+    habitlogs: {
+        [key: string]: {
+            [key: string]: 0 | 1;
+        };
+    };
     tags: Tag[];
     tasklists: TaskList[];
 };
@@ -96,7 +102,6 @@ export type CollectionResponses = {
 export type Trackable = {
     id: RecordIdString;
     name: string;
-    progress: 0 | 0.5 | 1;
     notes: string;
     tags: RecordIdString[];
 };
@@ -105,12 +110,14 @@ export type Task = Trackable & {
     parent?: RecordIdString;
     duedate: IsoDateString;
     list: RecordIdString;
+    progress: 0 | 0.5 | 1;
 };
 
 export type Habit = Trackable & {
     frequency: {
         start: IsoDateString;
-        days: number;
+        days: number[];
+        string: string;
     };
 };
 
@@ -129,6 +136,7 @@ export type TaskList = {
 
 export const templates: {
     task: Task;
+    habit: Habit;
 } = {
     task: {
         id: genId(15),
@@ -140,6 +148,17 @@ export const templates: {
         progress: 0,
         tags: [],
     },
+    habit: {
+        id: genId(15),
+        name: '',
+        notes: '',
+        tags: [],
+        frequency: {
+            start: dayjs().format('YYYY-MM-DD'),
+            days: [0, 1, 2, 3, 4, 5, 6],
+            string: 'Once a Day, 7 Days a Week',
+        },
+    },
 };
 
 export function newTask(override?: object) {
@@ -147,6 +166,15 @@ export function newTask(override?: object) {
     task.id = genId(15);
     return {
         ...task,
+        ...override,
+    };
+}
+
+export function newHabit(override?: object) {
+    const habit = templates.habit;
+    habit.id = genId(15);
+    return {
+        ...habit,
         ...override,
     };
 }

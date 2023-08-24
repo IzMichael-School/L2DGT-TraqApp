@@ -7,8 +7,11 @@
     import TextInput from '$lib/TextInput.svelte';
     import Button from '$lib/Button.svelte';
     import TaskPicker from '$lib/TaskPicker.svelte';
+    import DatePicker from '$lib/DatePicker.svelte';
+    import ModalDimmer from '$lib/ModalDimmer.svelte';
 
-    let parentObj: Task | undefined;
+    let parentObj: Task | undefined,
+        showDatePicker = false;
 </script>
 
 <div class="flex-1" />
@@ -57,11 +60,26 @@
         />
         <p class="mb-3 w-full text-left text-sm">Notes</p>
 
-        <input
-            type="datetime-local"
-            class="my-1 w-full min-w-[12rem] rounded-none border-b-2 border-black bg-transparent p-2 font-normal outline-none transition-colors duration-200 ease-in-out hover:bg-gray-100"
-            bind:value={task.duedate}
-        />
+        <button
+            class="my-1 flex w-full min-w-[12rem] flex-row items-center justify-start rounded-none border-b-2 border-black bg-transparent p-2 text-left font-normal outline-none transition-colors duration-200 ease-in-out hover:bg-gray-100"
+            on:click={() => (showDatePicker = true)}
+        >
+            <p
+                class="{task?.duedate
+                    ? 'flex-1'
+                    : ''} max-h-6 overflow-hidden overflow-ellipsis transition-all duration-300 ease-in-out"
+            >
+                {dayjs(task.duedate).format('dddd, DD MMMM YYYY - HH:mm') || 'Open Date Picker'}
+            </p>
+            <img src="/assets/icons/arrow-up.svg" alt="Arrow Pointing Right" class="ml-1 h-6 w-6 rotate-90" />
+        </button>
+        {#if showDatePicker}
+            <ModalDimmer on:close={() => (showDatePicker = false)}>
+                <div class="overflow-hidden rounded-lg border-x-2 border-t-2 border-zinc-200">
+                    <DatePicker bind:value={task.duedate} on:change={() => (showDatePicker = false)} />
+                </div>
+            </ModalDimmer>
+        {/if}
         <p class="mb-3 w-full text-left text-sm">Due Date</p>
 
         <TaskPicker bind:value={task.parent} bind:valueFull={parentObj}>
@@ -126,7 +144,6 @@
 </SidebarModal>
 
 <style>
-    input,
     button,
     p {
         flex-shrink: 0;
