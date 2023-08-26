@@ -34,56 +34,58 @@
 />
 
 <div
-    class="group flex h-[3.25rem] w-full flex-row items-center justify-start gap-5"
+    class="group flex w-full flex-col items-center justify-start lg:h-[3.25rem] lg:flex-row"
     bind:this={element}
     on:contextmenu|preventDefault={() => {
         if (!$poppedup) (showMenu = true), ($poppedup = true);
     }}
 >
     <button
-        class="flex w-1/2 cursor-pointer flex-col items-start justify-center py-2 text-left"
+        class="flex w-full cursor-pointer flex-row flex-wrap items-end justify-between pt-3 pb-1 text-left lg:w-1/2 lg:flex-col lg:flex-nowrap lg:items-start lg:justify-center lg:py-2"
         on:click={() => {
             dispatch('edit', { habit: habit });
         }}
     >
-        <h4 class="h-6 text-base text-black group-hover:text-sm lg:h-7 lg:text-xl lg:group-hover:text-lg">
+        <h4 class="h-6 text-base text-black lg:h-7 lg:text-xl lg:group-hover:text-lg">
             {habit.name}
         </h4>
-        <p
-            class="h-0 w-full overflow-hidden text-xs italic text-black group-hover:h-4 max-lg:mb-1 lg:text-sm lg:group-hover:mt-1 lg:group-hover:h-5"
-        >
+        <p class="overflow-hidden text-sm italic text-black lg:h-0 lg:w-full lg:group-hover:mt-1 lg:group-hover:h-5">
             {habit.frequency.string}
             {habit.tags.length > 0 ? '-' : ''}
             {habit.tags.join(', ')}
         </p>
     </button>
 
-    <!-- eslint-disable-next-line @typescript-eslint/no-unused-vars -->
-    {#each Array(7) as _i, i}
-        {#if habit.frequency.days.includes(i) && dayjs(weekstart.add(i, 'day')).isAfter(dayjs(habit.frequency.start).subtract(1, 'day'), 'day')}
-            <div
-                class="flex h-full flex-col items-center justify-center px-2 py-1 {dayjs().day() == i
-                    ? 'border-x-2 border-zinc-500'
-                    : ''}"
-                title={dayjs(weekstart.add(i, 'day')).format('dddd, DD MMMM')}
-            >
-                <ProgressCircle
-                    value={$workspace.habitlogs?.[dayjs(weekstart.add(i, 'day')).format('YYYY-MM-DD')]?.[habit.id]}
-                    inactive={dayjs().day() > i}
-                    on:click={() => {
-                        if (dayjs().day() == i) setProgress(1, i);
-                    }}
-                    on:contextmenu={() => {
-                        if (dayjs().day() == i) setProgress(0, i);
-                    }}
-                />
-            </div>
-        {:else}
-            <div class="h-full px-2 py-1 {dayjs().day() == i ? 'border-x-2 border-zinc-500' : ''}">
-                <span class="block h-0 w-7" />
-            </div>
-        {/if}
-    {/each}
+    <div
+        class="flex h-[2.25rem] w-full flex-row items-center justify-between lg:ml-5 lg:h-[3.25rem] lg:w-fit lg:flex-1 lg:justify-start lg:gap-5"
+    >
+        <!-- eslint-disable-next-line @typescript-eslint/no-unused-vars -->
+        {#each Array(7) as _i, i}
+            {#if habit.frequency.days.includes(i) && dayjs(weekstart.add(i, 'day')).isAfter(dayjs(habit.frequency.start).subtract(1, 'day'), 'day')}
+                <div
+                    class="flex h-full flex-col items-center justify-center px-2 py-1 {dayjs().day() == i
+                        ? 'border-x-2 border-zinc-500'
+                        : ''}"
+                    title={dayjs(weekstart.add(i, 'day')).format('dddd, DD MMMM')}
+                >
+                    <ProgressCircle
+                        value={$workspace.habitlogs?.[dayjs(weekstart.add(i, 'day')).format('YYYY-MM-DD')]?.[habit.id]}
+                        inactive={dayjs().day() > i}
+                        on:click={() => {
+                            if (dayjs().day() == i) setProgress(1, i);
+                        }}
+                        on:contextmenu={() => {
+                            if (dayjs().day() == i) setProgress(0, i);
+                        }}
+                    />
+                </div>
+            {:else}
+                <div class="h-full px-2 py-1 {dayjs().day() == i ? 'border-x-2 border-zinc-500' : ''}">
+                    <span class="block h-0 w-7" />
+                </div>
+            {/if}
+        {/each}
+    </div>
 </div>
 
 {#if showMenu}
