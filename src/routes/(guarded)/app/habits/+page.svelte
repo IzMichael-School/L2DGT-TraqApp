@@ -145,14 +145,19 @@
                     <!-- eslint-disable-next-line @typescript-eslint/no-unused-vars -->
                     {#each Array(7) as _day, d}
                         {#if i + d + 6 * i < (dayjs().isLeapYear() ? 366 : 365)}
-                            <div class="flex w-full flex-row items-center justify-center">
-                                <ProgressCircle
-                                    value={$workspace.habitlogs?.[
-                                        dayjs(yearStart.add(i, 'weeks').add(d, 'day')).format('YYYY-MM-DD')
-                                    ]?.[yearlyViewing]}
-                                    inactive={dayjs().dayOfYear() > i + 1 + d + 6 * i}
-                                />
-                            </div>
+                            {@const value =
+                                $workspace.habitlogs?.[
+                                    dayjs(yearStart.add(i, 'weeks').add(d, 'day')).format('YYYY-MM-DD')
+                                ]?.[yearlyViewing]}
+                            {#if value || $workspace.habits
+                                    .find((a) => a.id == yearlyViewing)
+                                    ?.frequency.days.includes(d)}
+                                <div class="flex w-full flex-row items-center justify-center">
+                                    <ProgressCircle {value} inactive={dayjs().dayOfYear() > i + 1 + d + 6 * i} />
+                                </div>
+                            {:else}
+                                <span />
+                            {/if}
                         {/if}
                     {/each}
                     {#if yearStart
