@@ -19,7 +19,7 @@
         variant
     ]} {xclass} {value ? 'bg-blue-500' : 'bg-transparent'}"
 >
-    <input type="checkbox" bind:checked={value} class="h-0 w-0 overflow-hidden" />
+    <input type="checkbox" bind:checked={value} class="invisible h-0 w-0 overflow-hidden" />
 </label>
 
 <style>
