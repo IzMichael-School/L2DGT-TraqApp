@@ -51,8 +51,6 @@
         </h4>
         <p class="overflow-hidden text-sm italic text-black lg:h-0 lg:w-full lg:group-hover:mt-1 lg:group-hover:h-5">
             {habit.frequency.string}
-            {habit.tags.length > 0 ? '-' : ''}
-            {habit.tags.join(', ')}
         </p>
     </button>
 

@@ -79,8 +79,6 @@
                 : 'text-black'}"
         >
             Due: {dayjs(task.duedate).format($currentUser.preferences.dateFormat)}
-            {task.tags.length > 0 ? '-' : ''}
-            {task.tags.join(', ')}
         </p>
     </button>
 </div>

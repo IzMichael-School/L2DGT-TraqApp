@@ -69,7 +69,6 @@ export type WorkspacesRecord = {
             [key: string]: 0 | 1;
         };
     };
-    tags: Tag[];
     tasklists: Tasklist[];
 };
 
@@ -103,7 +102,6 @@ export type Trackable = {
     id: RecordIdString;
     name: string;
     notes: string;
-    tags: RecordIdString[];
 };
 
 export type Task = Trackable & {
@@ -119,12 +117,6 @@ export type Habit = Trackable & {
         days: number[];
         string: string;
     };
-};
-
-export type Tag = {
-    id: RecordIdString;
-    name: string;
-    color: string;
 };
 
 export type Tasklist = {
@@ -147,13 +139,11 @@ export const templates: {
         parent: '',
         duedate: '',
         progress: 0,
-        tags: [],
     },
     habit: {
         id: genId(15),
         name: '',
         notes: '',
-        tags: [],
         frequency: {
             start: dayjs().format('YYYY-MM-DD'),
             days: [0, 1, 2, 3, 4, 5, 6],
