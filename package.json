@@ -39,9 +39,6 @@
     },
     "type": "module",
     "dependencies": {
-        "@capacitor/android": "^5.2.1",
-        "@capacitor/cli": "^5.2.1",
-        "@capacitor/core": "^5.2.1",
         "dayjs": "^1.11.9",
         "pocketbase": "^0.15.3",
         "zxcvbn": "^4.4.2"
