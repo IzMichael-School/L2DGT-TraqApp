@@ -70,7 +70,7 @@ export type WorkspacesRecord = {
         };
     };
     tags: Tag[];
-    tasklists: TaskList[];
+    tasklists: Tasklist[];
 };
 
 export type UsersRecord = {
@@ -127,7 +127,7 @@ export type Tag = {
     color: string;
 };
 
-export type TaskList = {
+export type Tasklist = {
     id: RecordIdString;
     name: string;
 };
@@ -137,6 +137,7 @@ export type TaskList = {
 export const templates: {
     task: Task;
     habit: Habit;
+    tasklist: Tasklist;
 } = {
     task: {
         id: genId(15),
@@ -159,6 +160,10 @@ export const templates: {
             string: 'Once a Day, 7 Days a Week',
         },
     },
+    tasklist: {
+        id: genId(15),
+        name: '',
+    },
 };
 
 export function newTask(override?: object) {
@@ -166,6 +171,15 @@ export function newTask(override?: object) {
     task.id = genId(15);
     return {
         ...task,
+        ...override,
+    };
+}
+
+export function newTasklist(override?: object) {
+    const tasklist = templates.tasklist;
+    tasklist.id = genId(15);
+    return {
+        ...tasklist,
         ...override,
     };
 }

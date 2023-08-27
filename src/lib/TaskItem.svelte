@@ -3,6 +3,7 @@
     import { poppedup, multiSorter } from '$lib/lib';
 
     import { createEventDispatcher } from 'svelte';
+    import { flip } from 'svelte/animate';
     import dayjs from 'dayjs';
 
     import ProgressCircle from '$lib/ProgressCircle.svelte';
@@ -140,7 +141,9 @@
         {#each $workspace.tasks
             .filter((t) => t.parent == task.id)
             .sort(multiSorter(['progress', 'duedate', 'name'])) as subtask (subtask.id)}
-            <TaskItem task={subtask} on:edit={(e) => dispatch('edit', e.detail)} />
+            <div animate:flip={{ delay: 400 }}>
+                <TaskItem task={subtask} on:edit={(e) => dispatch('edit', e.detail)} />
+            </div>
         {/each}
     </div>
 {/if}
