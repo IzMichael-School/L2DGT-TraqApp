@@ -130,18 +130,18 @@
 
             <div class="grid grid-cols-9 gap-x-2 gap-y-4 max-lg:w-full">
                 <span />
-                <p class="w-full text-center">Sun</p>
-                <p class="w-full text-center">Mon</p>
-                <p class="w-full text-center">Tue</p>
-                <p class="w-full text-center">Wed</p>
-                <p class="w-full text-center">Thu</p>
-                <p class="w-full text-center">Fri</p>
-                <p class="w-full text-center">Sat</p>
+                <p class="w-full text-center text-sm lg:text-base">Sun</p>
+                <p class="w-full text-center text-sm lg:text-base">Mon</p>
+                <p class="w-full text-center text-sm lg:text-base">Tue</p>
+                <p class="w-full text-center text-sm lg:text-base">Wed</p>
+                <p class="w-full text-center text-sm lg:text-base">Thu</p>
+                <p class="w-full text-center text-sm lg:text-base">Fri</p>
+                <p class="w-full text-center text-sm lg:text-base">Sat</p>
                 <span />
 
                 <!-- eslint-disable-next-line @typescript-eslint/no-unused-vars -->
                 {#each Array(53) as _week, i}
-                    <p class="w-full text-right">{yearStart.add(i, 'weeks').format('D/M')}</p>
+                    <p class="w-full text-right text-sm lg:text-base">{yearStart.add(i, 'weeks').format('D/M')}</p>
                     <!-- eslint-disable-next-line @typescript-eslint/no-unused-vars -->
                     {#each Array(7) as _day, d}
                         {#if i + d + 6 * i < (dayjs().isLeapYear() ? 366 : 365)}
@@ -164,7 +164,9 @@
                         .add(i, 'weeks')
                         .add(6, 'days')
                         .format('YYYY') == yearStart.format('YYYY') || yearStart.endOf('year').day() == 6}
-                        <p class="w-full text-left">{yearStart.add(i, 'weeks').add(6, 'days').format('D/M')}</p>
+                        <p class="w-full text-left text-sm lg:text-base">
+                            {yearStart.add(i, 'weeks').add(6, 'days').format('D/M')}
+                        </p>
                     {/if}
                 {/each}
             </div>
