@@ -86,7 +86,7 @@
                 class="mt-2 flex flex-row items-center justify-start rounded-lg p-2 text-gray-500 hover:bg-slate-200 lg:-mt-2"
                 on:click={() => {
                     const newhabit = newHabit();
-                    editingHabit = newhabit;
+                    editingHabit = { ...newhabit };
                 }}
             >
                 <img
