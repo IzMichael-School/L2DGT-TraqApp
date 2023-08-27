@@ -13,11 +13,11 @@
     <NavigationBar />
 
     <div
-        class="max-h-full max-w-full flex-1 overflow-hidden p-1 transition-colors duration-300 ease-in-out max-lg:w-full max-lg:rounded-t-[1.75rem] lg:h-full lg:rounded-l-[1.75rem]"
+        class="flex max-h-full max-w-full flex-1 flex-col items-center justify-start overflow-hidden p-1 transition-colors duration-300 ease-in-out max-lg:w-full max-lg:rounded-t-[1.75rem] lg:h-full lg:rounded-l-[1.75rem]"
         style="background-color: {colors[$color]};"
     >
         <div
-            class="h-full max-h-full w-full max-w-full overflow-hidden bg-slate-100 max-lg:rounded-t-3xl lg:rounded-l-3xl"
+            class="max-h-full w-full max-w-full flex-1 overflow-hidden bg-slate-100 max-lg:rounded-t-3xl lg:rounded-l-3xl"
         >
             {#key data.currentPath}
                 <div
@@ -29,6 +29,12 @@
                 </div>
             {/key}
         </div>
+        <a
+            class="w-full shrink-0 cursor-pointer pt-1 text-right text-sm font-bold text-white hover:underline"
+            href="https://izmichael.com"
+        >
+            &copy; IzMichael 2023 - izmichael.com
+        </a>
     </div>
 </div>
 
