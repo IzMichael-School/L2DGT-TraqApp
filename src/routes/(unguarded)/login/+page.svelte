@@ -5,6 +5,7 @@
     export let form;
     import Button from '$lib/Button.svelte';
     import TextInput from '$lib/TextInput.svelte';
+    import { goto } from '$app/navigation';
     let loading = false;
 </script>
 
@@ -12,9 +13,22 @@
     <title>Log In | Traq</title>
 </svelte:head>
 
+<button
+    class="mx-auto mt-10 mb-5 flex flex-row items-center justify-start rounded-lg bg-brand-paleblue p-2 lg:absolute lg:top-0 lg:left-0 lg:mx-10"
+    on:click={() => goto('/')}
+>
+    <img
+        src="/assets/icons/chevron-up.svg"
+        alt="Arrow Pointing Left"
+        class="aspect-square h-8 w-8 -rotate-90 rounded-lg invert"
+    />
+    <h1 class="mx-2 text-xl font-bold text-white lg:pb-1">Back to Home</h1>
+    <img src="/favicon.png" alt="Traq Logo" class="aspect-square h-8 w-8 rounded-lg" />
+</button>
+
 <form
     method="POST"
-    class="flex h-full w-full flex-col items-center justify-center p-5"
+    class="mx-auto flex w-full flex-col items-center justify-center p-5 lg:h-full lg:w-1/2"
     use:enhance={() => {
         return async ({ result }) => {
             pb.authStore.loadFromCookie(document.cookie);
@@ -38,6 +52,4 @@
     {#if form?.error}
         <p class="mt-5 w-full text-center font-bold text-red-700">{form.error}</p>
     {/if}
-
-    <!-- <p>{document?.cookie}</p> -->
 </form>
