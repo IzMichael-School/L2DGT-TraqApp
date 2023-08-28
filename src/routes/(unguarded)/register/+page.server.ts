@@ -24,7 +24,15 @@ export const actions: Actions = {
                 ...data,
             });
             await locals.pb.collection('users').requestVerification(data.email);
-            await locals.pb.collection('users').authWithPassword(data.email, data.password);
+            const user = await locals.pb.collection('users').authWithPassword(data.email, data.password);
+            await locals.pb.collection('workspaces').create({
+                owner: user.record.id,
+                name: `${data.username}'s Workspace`,
+                tasks: [],
+                tasklists: [],
+                habits: [],
+                habitlogs: [],
+            });
 
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
         } catch (e: any) {
