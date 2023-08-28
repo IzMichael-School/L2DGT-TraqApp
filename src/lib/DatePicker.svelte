@@ -6,7 +6,7 @@
     import { createEventDispatcher } from 'svelte';
     const dispatch = createEventDispatcher();
 
-    export let value: string,
+    export let value: string = dayjs().toISOString(),
         time = true;
 
     let input = dayjs(value),

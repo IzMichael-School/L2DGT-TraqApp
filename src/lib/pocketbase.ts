@@ -137,7 +137,7 @@ export const templates: {
         name: '',
         notes: '',
         parent: '',
-        duedate: '',
+        duedate: dayjs().toISOString(),
         progress: 0,
     },
     habit: {
@@ -157,7 +157,7 @@ export const templates: {
 };
 
 export function newTask(override?: object) {
-    const task = templates.task;
+    const task = { ...templates.task };
     task.id = genId(15);
     return {
         ...task,
@@ -166,7 +166,7 @@ export function newTask(override?: object) {
 }
 
 export function newTasklist(override?: object) {
-    const tasklist = templates.tasklist;
+    const tasklist = { ...templates.tasklist };
     tasklist.id = genId(15);
     return {
         ...tasklist,
@@ -175,7 +175,7 @@ export function newTasklist(override?: object) {
 }
 
 export function newHabit(override?: object) {
-    const habit = templates.habit;
+    const habit = { ...templates.habit };
     habit.id = genId(15);
     return {
         ...habit,

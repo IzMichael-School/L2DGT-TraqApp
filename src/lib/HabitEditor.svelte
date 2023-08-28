@@ -43,7 +43,7 @@
                 </div>
             {/each}
         </div>
-        <p class="mb-3 w-full text-left text-sm">Frequency by Day</p>
+        <p class="mb-3 w-full text-left text-sm">Days of the Week</p>
 
         <button
             class="my-1 flex w-full min-w-[12rem] flex-row items-center justify-start rounded-none border-b-2 border-black bg-transparent p-2 text-left font-normal outline-none transition-colors duration-200 ease-in-out hover:bg-gray-100"
@@ -54,7 +54,7 @@
                     ? 'flex-1'
                     : ''} max-h-6 overflow-hidden overflow-ellipsis transition-all duration-300 ease-in-out"
             >
-                {dayjs(habit.frequency.start).format('dddd, DD MMMM YYYY') || 'Open Date Picker'}
+                {habit.frequency.start ? dayjs(habit.frequency.start).format('dddd, DD MMMM YYYY') : 'Open Date Picker'}
             </p>
             <img src="/assets/icons/arrow-up.svg" alt="Arrow Pointing Right" class="ml-1 h-6 w-6 rotate-90" />
         </button>

@@ -69,7 +69,7 @@
                     ? 'flex-1'
                     : ''} max-h-6 overflow-hidden overflow-ellipsis transition-all duration-300 ease-in-out"
             >
-                {dayjs(task.duedate).format('dddd, DD MMMM YYYY - HH:mm') || 'Open Date Picker'}
+                {task.duedate ? dayjs(task.duedate).format('dddd, DD MMMM YYYY - HH:mm') : 'Open Date Picker'}
             </p>
             <img src="/assets/icons/arrow-up.svg" alt="Arrow Pointing Right" class="ml-1 h-6 w-6 rotate-90" />
         </button>
