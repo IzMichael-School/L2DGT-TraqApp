@@ -56,6 +56,8 @@
             />
             <span class="mr-2 text-sm lg:text-base">Add a Task</span>
         </button>
+    {:else}
+        <p class="mb-1">Looks like you don't have any task lists...</p>
     {/each}
 {/if}
 
@@ -93,6 +95,17 @@
         </button>
     </div>
 {/if}
+
+<button
+    class="mt-5 flex w-full flex-row items-center justify-start rounded-lg p-2 text-gray-500 hover:bg-slate-200 lg:hidden"
+    on:click={() => {
+        const newtasklist = newTasklist();
+        editingTasklist = newtasklist;
+    }}
+>
+    <img src="/assets/icons/plus.svg" alt="Plus Icon" class="mr-2 aspect-square h-5 w-5 opacity-50 lg:h-7 lg:w-7" />
+    <span class="mr-2 text-sm lg:text-base">Add a Task List</span>
+</button>
 
 {#if editingTask?.id}
     <ModalDimmer on:close={() => (editingTask = undefined)}>
