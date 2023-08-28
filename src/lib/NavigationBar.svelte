@@ -31,6 +31,7 @@
         on:click={() => goto('/app/habits')}
         active={$page.route.id?.includes('/app/habits')}
     />
+    <SidebarTab colorname="lightgrey" icon="logout.svg" label="Logout" on:click={() => goto('/logout')} />
 
     <div class="flex-1 overflow-hidden max-lg:h-0 lg:w-0" />
 
