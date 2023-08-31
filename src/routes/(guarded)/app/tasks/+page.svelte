@@ -31,15 +31,17 @@
         >
             {tasklist.name}
         </h2>
-        {#each $workspace.tasks
-            .filter((t) => !t.parent && t.list == tasklist.id)
-            .sort(multiSorter(['progress', 'duedate', 'name'])) as task (task.id)}
-            <div animate:flip={{ delay: 400 }}>
-                <TaskItem {task} on:edit={(e) => (editingTask = structuredClone(e.detail.task))} />
-            </div>
-        {:else}
-            <p class="mb-1">Looks like you don't have any tasks...</p>
-        {/each}
+        <div id="tasks" class="contents">
+            {#each $workspace.tasks
+                .filter((t) => !t.parent && t.list == tasklist.id)
+                .sort(multiSorter(['progress', 'duedate', 'name'])) as task (task.id)}
+                <div animate:flip={{ delay: 400 }}>
+                    <TaskItem {task} on:edit={(e) => (editingTask = structuredClone(e.detail.task))} />
+                </div>
+            {:else}
+                <p class="mb-1">Looks like you don't have any tasks...</p>
+            {/each}
+        </div>
         <button
             class="flex flex-row items-center justify-start rounded-lg p-2 text-gray-500 hover:bg-slate-200"
             on:click={() => {
