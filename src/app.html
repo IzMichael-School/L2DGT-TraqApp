@@ -2,23 +2,29 @@
 <html lang="en" style="width: 100vw; height: 100vh; overflow: hidden">
     <head>
         <meta charset="utf-8" />
+        <!-- Favicon -->
         <link rel="icon" type="image/png" href="%sveltekit.assets%/favicon.png" />
+        <!-- Responsive scaling -->
         <meta name="viewport" content="width=device-width,initial-scale=1" />
 
+        <!-- Anything else specified in componentry -->
         %sveltekit.head%
     </head>
 
     <body data-sveltekit-preload-data="hover">
+        <!-- Show if user has no JavaScript -->
         <noscript>
             <h1 style="font-size: 2rem">Woah there! Looks like you've got JavaScript disabled or blocked.</h1>
             <p>For full functionality of this site it is necessary to enable JavaScript.</p>
             <p>
                 Here are the
-                <a href="https://www.enable-javascript.com/"
-                    >instructions how to enable JavaScript in your web browser</a
-                >.
+                <a href="https://www.enable-javascript.com/">
+                    instructions how to enable JavaScript in your web browser
+                </a>
+                .
             </p>
         </noscript>
+        <!-- Inserts the actual app here -->
         <div style="display: contents">%sveltekit.body%</div>
     </body>
 

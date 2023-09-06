@@ -1,14 +1,20 @@
+// Import libraries
 import PocketBase from 'pocketbase';
 import { writable } from 'svelte/store';
 import dayjs from 'dayjs';
 
+// Establish connection with the database
 export const pb = new PocketBase('https://db.traq.izmichael.com');
+
+// Disable autocancellation for duplicated queries, to prevent false positives
 pb.autoCancellation(false);
 
+// Declare stores for current user, selected workspace, and save status
 export const currentUser = writable<User>(pb.authStore.model as unknown as User);
 export const workspace = writable<Workspace>();
 export const saving = writable<false | 'working' | 'failed'>(false);
 
+// Runs on app load, selects a workspace and subscribes to changes in the current user's record
 async function init() {
     if (pb.authStore.model?.id) {
         pb.collection('users').subscribe(pb.authStore.model.id, (e) => {
@@ -21,6 +27,7 @@ async function init() {
 }
 init();
 
+// Subscribe to changes in the selected workspace, update the $workspaces store with said changes
 workspace.subscribe(async (val) => {
     if (!val?.id) return;
     saving.set('working');
@@ -32,15 +39,13 @@ workspace.subscribe(async (val) => {
     }
 });
 
-saving.subscribe((val) => console.log(val ? 'Saving' : 'Saved'));
+// Database types
 
 // SQL Field Types
-
 export type IsoDateString = string;
 export type RecordIdString = string;
 
-// System fields
-
+// Database metadata fields
 export type BaseSystemFields<T = never> = {
     id: RecordIdString;
     created: IsoDateString;
@@ -50,6 +55,7 @@ export type BaseSystemFields<T = never> = {
     expand?: T;
 };
 
+// Database user metadata fields
 export type AuthSystemFields<T = never> = {
     email: string;
     emailVisibility: boolean;
@@ -59,6 +65,7 @@ export type AuthSystemFields<T = never> = {
 
 // Record types for each collection
 
+// Type declaration for a workspace record
 export type WorkspacesRecord = {
     owner: RecordIdString;
     name: string;
@@ -72,6 +79,7 @@ export type WorkspacesRecord = {
     tasklists: Tasklist[];
 };
 
+// Type declaration for a user record
 export type UsersRecord = {
     avatar?: string;
     preferences: {
@@ -98,12 +106,14 @@ export type CollectionResponses = {
 
 // Item Types
 
+// Tasks and Habits, basic item data
 export type Trackable = {
     id: RecordIdString;
     name: string;
     notes: string;
 };
 
+// Types for a task item
 export type Task = Trackable & {
     parent?: RecordIdString;
     duedate: IsoDateString;
@@ -111,6 +121,7 @@ export type Task = Trackable & {
     progress: 0 | 0.5 | 1;
 };
 
+// Types for a habit item
 export type Habit = Trackable & {
     frequency: {
         start: IsoDateString;
@@ -119,6 +130,7 @@ export type Habit = Trackable & {
     };
 };
 
+// Type for the tasklist object
 export type Tasklist = {
     id: RecordIdString;
     name: string;
@@ -156,6 +168,7 @@ export const templates: {
     },
 };
 
+// Helper function to generate a blank task
 export function newTask(override?: object) {
     const task = { ...templates.task };
     task.id = genId(15);
@@ -165,6 +178,7 @@ export function newTask(override?: object) {
     };
 }
 
+// Helper function to generate a blank task list
 export function newTasklist(override?: object) {
     const tasklist = { ...templates.tasklist };
     tasklist.id = genId(15);
@@ -174,6 +188,7 @@ export function newTasklist(override?: object) {
     };
 }
 
+// Helper function to generate a blank habit
 export function newHabit(override?: object) {
     const habit = { ...templates.habit };
     habit.id = genId(15);
@@ -183,8 +198,8 @@ export function newHabit(override?: object) {
     };
 }
 
-// Helper Functions
-function genId(length: number) {
+// Generates a Database schema compliant ID string
+function genId(length = 15) {
     let result = '';
     const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
     const charactersLength = characters.length;

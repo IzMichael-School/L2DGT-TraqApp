@@ -1,12 +1,15 @@
 <script lang="ts">
+    // Declare Props
     export let variant: keyof typeof variants = 'default',
         nominwidth: boolean | undefined = undefined;
     export { xclass as class };
     let xclass: string | undefined;
 
+    // Create dispatcher for click events
     import { createEventDispatcher } from 'svelte';
     const dispatch = createEventDispatcher();
 
+    // Declare style variants
     const variants = {
         default: 'bg-brand-blue text-white hover:brightness-90 group-hover:brightness-90',
         secondary: 'bg-gray-200 text-black hover:brightness-90 group-hover:brightness-90',
@@ -18,6 +21,7 @@
     };
 </script>
 
+<!-- Create the button element, with default styles, variant additions, prop additions, and click event dispatcher -->
 <button
     class="{nominwidth != undefined
         ? ''

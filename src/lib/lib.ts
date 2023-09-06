@@ -1,3 +1,8 @@
+/**
+ * Tests if a string is a valud email
+ * @param str String to be checked
+ * @returns Bool representing validity
+ */
 export function isEmail(str: string) {
     const regex =
         // eslint-disable-next-line no-control-regex
@@ -5,6 +10,11 @@ export function isEmail(str: string) {
     return regex.test(str);
 }
 
+/**
+ * Generates an alphanumberic password of specified length
+ * @param length Length of password
+ * @returns Password of specified length
+ */
 export function generatePassword(length: number): string {
     const charset = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
     let retVal = '';
@@ -14,6 +24,7 @@ export function generatePassword(length: number): string {
     return retVal;
 }
 
+// Import Svelte Store Library
 import { writable } from 'svelte/store';
 // State indicator for when any popups are visible
 export const poppedup = writable(false);
@@ -30,19 +41,28 @@ export const colors: Colors = {
     grey: '#363844',
 };
 
+// Types for branding colours, for borders
 export type Color = 'blue' | 'paleblue' | 'red' | 'green' | 'lavender' | 'lightgrey' | 'grey';
 export type Colors = {
     [key in Color]: string;
 };
 
+/**
+ * Sort an array by multiple properties, in descending order of priority
+ * @param fields List of keys to sort by, descending order
+ * @returns Number, used by Array.sort() to sort the array
+ */
 export const multiSorter = (fields: string[]) => (a: object, b: object) =>
     fields
-        .map((o) => {
+        .map((o: string) => {
             let dir = 1;
             if (o[0] === '-') {
                 dir = -1;
                 o = o.substring(1);
             }
+
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-ignore
             return a[o] > b[o] ? dir : a[o] < b[o] ? -dir : 0;
         })
         .reduce((p, n) => (p ? p : n), 0);

@@ -1,11 +1,14 @@
 <script lang="ts">
+    // Declare Props
     export let value = 0,
         inactive = false;
 
+    // Create dispatcher for click events
     import { createEventDispatcher } from 'svelte';
     const dispatch = createEventDispatcher();
 </script>
 
+<!-- This is the progress circle element, used in all task items and habits. Left and right clicks will have different actions, passed as custom events -->
 <button
     on:click={() => dispatch('click')}
     on:contextmenu|preventDefault|stopPropagation={() => dispatch('contextmenu')}
@@ -14,6 +17,7 @@
         ? 'border-brand-lightgrey'
         : 'border-black'}"
 >
+    <!-- Fills up from left to right based on value -->
     <span
         class="block h-full transition-all duration-300 ease-in-out {value == 1 ? 'bg-brand-lightgrey' : 'bg-black'}"
         style="width: {value * 100}%;"

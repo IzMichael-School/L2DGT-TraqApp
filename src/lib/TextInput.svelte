@@ -1,4 +1,5 @@
 <script lang="ts">
+    // Declare Props
     export let value = '',
         name = '',
         subtitle = '',
@@ -11,6 +12,7 @@
     export { xclass as class };
     let xclass: string | undefined;
 
+    // Declare style variants
     const variants = {
         default: 'bg-gray-100 text-black hover:bg-gray-200',
         outline: 'bg-transparent border border-gray-400 hover:bg-gray-100 hover:border-gray-900',
@@ -18,6 +20,7 @@
     };
 </script>
 
+<!-- If input type is secret, use password input, else use text -->
 {#if secret == undefined}
     <input
         type="text"
@@ -44,6 +47,7 @@
     />
 {/if}
 
+<!-- Add subtitle, if specified -->
 <p class="{subtitleClass} ml-1 min-w-fit text-left text-sm italic text-gray-700">
     {subtitle}
 </p>

@@ -1,14 +1,19 @@
 <script lang="ts">
+    // Create dispatcher for click events
     import { createEventDispatcher } from 'svelte';
     const dispatch = createEventDispatcher();
 
+    // Import Theme Colour Sets
     import { colors, type Color } from '$lib/lib';
+
+    // Declare Props
     export let colorname: Color,
         icon: string,
         label: string,
         active = false;
 </script>
 
+<!-- Button to go in navbar, executes custom click event, uses props -->
 <button
     class="group flex aspect-square flex-col items-center justify-center p-2 text-lg max-lg:h-full lg:w-full"
     class:active
