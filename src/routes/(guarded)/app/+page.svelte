@@ -54,7 +54,7 @@
                         <TaskItem {task} />
                     </div>
                 {:else}
-                    <p class="mb-1">Looks like you don't have any upcoming tasks...</p>
+                    <p class="mb-1 ml-2">Looks like you don't have any upcoming tasks...</p>
                 {/each}
             </div>
 
@@ -67,7 +67,7 @@
                         <HabitItem {habit} {weekstart} single={true} {dayofweek} />
                     </div>
                 {:else}
-                    <p class="mb-1">Looks like you don't have any upcoming tasks...</p>
+                    <p class="mb-1 ml-2">Looks like you don't have any upcoming tasks...</p>
                 {/each}
             </div>
         {:else}
