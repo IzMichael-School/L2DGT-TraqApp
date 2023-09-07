@@ -9,7 +9,7 @@
     const dispatch = createEventDispatcher();
 
     // Declare Props
-    export let value: string = dayjs().toISOString(),
+    export let value = 'undefined',
         time = true;
 
     // Declare variables
@@ -28,8 +28,8 @@
         },
         // Object controlling the calendar viewer
         viewer = {
-            year: input.year(),
-            month: input.month(),
+            year: input.year() || dayjs().year(),
+            month: input.month() || dayjs().month(),
         },
         // List of buttons for time selection, used for scroll jumping
         timeEls: TimeEls = {
@@ -253,7 +253,22 @@
             : 'h-[4.9rem] flex-col gap-2 px-1 pb-1 pt-2'}"
     >
         <!-- Currently selected value of picker -->
-        <p class="font-bold">{dayjs(selected).format(time ? 'dddd, DD MMMM YYYY - HH:mm' : 'dddd, DD MMMM YYYY')}</p>
+        <p class="mr-2 flex-1 font-bold">
+            {dayjs(selected).format(time ? 'dddd, DD MMMM YYYY - HH:mm' : 'dddd, DD MMMM YYYY')}
+        </p>
+        <!-- Clear value button -->
+        <button
+            class="mx-1 rounded-md bg-brand-red px-4 py-1 text-white hover:brightness-90 {time ? '' : 'w-full'}"
+            on:click={() => {
+                value = '';
+                input = dayjs('undefined');
+                dispatch('change', {
+                    value,
+                });
+            }}
+        >
+            Clear
+        </button>
         <!-- Submit button -->
         <button
             class="rounded-md bg-brand-blue px-4 py-1 text-white hover:brightness-90 {time ? '' : 'w-full'}"

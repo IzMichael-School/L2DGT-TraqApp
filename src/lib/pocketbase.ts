@@ -160,7 +160,7 @@ export const templates: {
         name: '',
         notes: '',
         parent: '',
-        duedate: dayjs().toISOString(),
+        duedate: '',
         progress: 0,
     },
     habit: {
