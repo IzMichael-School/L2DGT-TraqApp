@@ -31,6 +31,7 @@ export const actions: Actions = {
             // Create user with specified input data
             await locals.pb.collection('users').create({
                 ...data,
+                dateFormat: 'DD/MM/YYYY HH:mm',
             });
             // Send verification email
             await locals.pb.collection('users').requestVerification(data.email);
@@ -44,6 +45,15 @@ export const actions: Actions = {
                 tasklists: [],
                 habits: [],
                 habitlogs: [],
+                statistics: {
+                    habits: {
+                        completed: 0,
+                    },
+                    tasks: {
+                        completed: 0,
+                        created: 0,
+                    },
+                },
             });
 
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
