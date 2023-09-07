@@ -35,6 +35,8 @@
         if (ref > -1) $workspace.tasks[ref].progress = value as 0 | 0.5 | 1;
         // Set local task variable progress to value from args
         task.progress = value as 0 | 0.5 | 1;
+        // Update statistics
+        if (value == 1) $workspace.statistics.tasks.completed++;
     }
 </script>
 

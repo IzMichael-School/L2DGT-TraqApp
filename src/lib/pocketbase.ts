@@ -77,6 +77,7 @@ export type WorkspacesRecord = {
         };
     };
     tasklists: Tasklist[];
+    statistics: Statistics;
 };
 
 // Type declaration for a user record
@@ -134,6 +135,16 @@ export type Habit = Trackable & {
 export type Tasklist = {
     id: RecordIdString;
     name: string;
+};
+
+export type Statistics = {
+    tasks: {
+        completed: number;
+        created: number;
+    };
+    habits: {
+        completed: number;
+    };
 };
 
 // Object Templates

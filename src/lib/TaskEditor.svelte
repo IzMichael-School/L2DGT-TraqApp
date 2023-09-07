@@ -168,6 +168,10 @@
                     let ref = $workspace.tasks.findIndex((a) => a.id == task?.id);
                     // If index found, or else...
                     if (ref > -1) {
+                        // Update statistics
+                        if (task?.progress == 1 && $workspace.tasks[ref].progress != 1)
+                            $workspace.statistics.tasks.completed++;
+
                         // Assign new value to the ref, or template if not defined
                         $workspace.tasks[ref] = task ?? newTask();
                     } else {
