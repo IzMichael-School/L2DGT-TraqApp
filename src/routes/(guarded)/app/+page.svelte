@@ -1,7 +1,7 @@
 <script lang="ts">
     // Import libraries, stores, types
     import { color, multiSorter } from '$lib/lib';
-    import { pb, currentUser, workspace, type Workspace } from '$lib/pocketbase';
+    import { currentUser, workspace } from '$lib/pocketbase';
     import { flip } from 'svelte/animate';
     import dayjs from 'dayjs';
 
