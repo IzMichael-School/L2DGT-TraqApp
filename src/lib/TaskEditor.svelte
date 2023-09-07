@@ -177,6 +177,7 @@
                     } else {
                         // Add new value to list, or template if not defined
                         $workspace.tasks = [...$workspace.tasks, task ?? newTask()];
+                        $workspace.statistics.tasks.created++;
                     }
                     // Clear editing selection
                     task = undefined;
