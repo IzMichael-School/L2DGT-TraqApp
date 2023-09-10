@@ -37,6 +37,14 @@
         on:click={() => goto('/app/habits')}
         active={$page.route.id?.includes('/app/habits')}
     />
+    <!-- Nav Button for Settings -->
+    <NavigationButton
+        colorname="green"
+        icon="gear.svg"
+        label="Settings"
+        on:click={() => goto('/app/settings')}
+        active={$page.route.id?.includes('/app/settings')}
+    />
     <!-- Button to Logout -->
     <NavigationButton colorname="lightgrey" icon="logout.svg" label="Logout" on:click={() => goto('/logout')} />
 

@@ -95,7 +95,7 @@
                 ? 'text-brand-lightgrey line-through'
                 : 'text-black'}"
         >
-            Due: {task.duedate ? dayjs(task.duedate).format($currentUser.preferences.dateFormat) : 'Unset'}
+            Due: {task.duedate ? dayjs(task.duedate).format($currentUser.dateFormat) : 'Unset'}
         </p>
     </button>
 </div>

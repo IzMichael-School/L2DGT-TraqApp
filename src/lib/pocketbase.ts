@@ -82,10 +82,7 @@ export type WorkspacesRecord = {
 
 // Type declaration for a user record
 export type UsersRecord = {
-    avatar?: string;
-    preferences: {
-        dateFormat: string;
-    };
+    dateFormat: string;
 };
 
 // Response types include system fields and match responses from the PocketBase API
