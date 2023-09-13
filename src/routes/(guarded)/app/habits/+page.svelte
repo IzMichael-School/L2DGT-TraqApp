@@ -31,7 +31,7 @@
         // Get the date for the start of the week
         weekstart = dayjs().startOf('week');
         // Set yearly viewer to view first habit, alphabetically
-        yearlyViewing = $workspace.habits.sort((a, b) => (a.name > b.name ? 1 : -1))[0].id;
+        yearlyViewing = $workspace.habits.sort((a, b) => (a.name > b.name ? 1 : -1))[0]?.id;
     });
 </script>
 
@@ -160,41 +160,43 @@
                 <span />
 
                 <!-- Iterate over every week, 53 to account for not starting on a Sunday -->
-                <!-- eslint-disable-next-line @typescript-eslint/no-unused-vars -->
-                {#each Array(53) as _week, i}
-                    <!-- Add the date for the Sunday of that week -->
-                    <p class="w-full text-right text-sm lg:text-base">{yearStart.add(i, 'weeks').format('D/M')}</p>
-                    <!-- Iterate over each day of that week -->
+                {#if yearlyViewing}
                     <!-- eslint-disable-next-line @typescript-eslint/no-unused-vars -->
-                    {#each Array(7) as _day, d}
-                        {#if i + d + 6 * i < (dayjs().isLeapYear() ? 366 : 365)}
-                            <!-- Define value const to be the currently specified value for that date -->
-                            {@const value =
-                                $workspace.habitlogs?.[
-                                    dayjs(yearStart.add(i, 'weeks').add(d, 'day')).format('YYYY-MM-DD')
-                                ]?.[yearlyViewing]}
-                            <!-- If value specified or day applies to habit, show progress circle pre-filled and non-interactive -->
-                            {#if value || $workspace.habits
-                                    .find((a) => a.id == yearlyViewing)
-                                    ?.frequency.days.includes(d)}
-                                <div class="flex w-full flex-row items-center justify-center">
-                                    <ProgressCircle {value} inactive={dayjs().dayOfYear() > i + 1 + d + 6 * i} />
-                                </div>
-                            {:else}
-                                <span />
+                    {#each Array(53) as _week, i}
+                        <!-- Add the date for the Sunday of that week -->
+                        <p class="w-full text-right text-sm lg:text-base">{yearStart.add(i, 'weeks').format('D/M')}</p>
+                        <!-- Iterate over each day of that week -->
+                        <!-- eslint-disable-next-line @typescript-eslint/no-unused-vars -->
+                        {#each Array(7) as _day, d}
+                            {#if i + d + 6 * i < (dayjs().isLeapYear() ? 366 : 365)}
+                                <!-- Define value const to be the currently specified value for that date -->
+                                {@const value =
+                                    $workspace.habitlogs?.[
+                                        dayjs(yearStart.add(i, 'weeks').add(d, 'day')).format('YYYY-MM-DD')
+                                    ]?.[yearlyViewing]}
+                                <!-- If value specified or day applies to habit, show progress circle pre-filled and non-interactive -->
+                                {#if value || $workspace.habits
+                                        .find((a) => a.id == yearlyViewing)
+                                        ?.frequency.days.includes(d)}
+                                    <div class="flex w-full flex-row items-center justify-center">
+                                        <ProgressCircle {value} inactive={dayjs().dayOfYear() > i + 1 + d + 6 * i} />
+                                    </div>
+                                {:else}
+                                    <span />
+                                {/if}
                             {/if}
+                        {/each}
+                        <!-- If week is a full 7 days, add date of that Saturday -->
+                        {#if yearStart
+                            .add(i, 'weeks')
+                            .add(6, 'days')
+                            .format('YYYY') == yearStart.format('YYYY') || yearStart.endOf('year').day() == 6}
+                            <p class="w-full text-left text-sm lg:text-base">
+                                {yearStart.add(i, 'weeks').add(6, 'days').format('D/M')}
+                            </p>
                         {/if}
                     {/each}
-                    <!-- If week is a full 7 days, add date of that Saturday -->
-                    {#if yearStart
-                        .add(i, 'weeks')
-                        .add(6, 'days')
-                        .format('YYYY') == yearStart.format('YYYY') || yearStart.endOf('year').day() == 6}
-                        <p class="w-full text-left text-sm lg:text-base">
-                            {yearStart.add(i, 'weeks').add(6, 'days').format('D/M')}
-                        </p>
-                    {/if}
-                {/each}
+                {/if}
             </div>
         </div>
     </section>
