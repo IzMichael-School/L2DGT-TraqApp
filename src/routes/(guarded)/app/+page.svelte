@@ -5,8 +5,8 @@
     import { flip } from 'svelte/animate';
     import dayjs from 'dayjs';
 
-    // Set colour of dashboard to paleblue
-    $color = 'paleblue';
+    // Set colour of dashboard to lavender
+    $color = 'lavender';
 
     // Import Components
     import TaskItem from '$lib/TaskItem.svelte';
