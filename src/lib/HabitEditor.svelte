@@ -27,7 +27,7 @@
 <!-- Sidebar wrapper, with bg, container, and interaction hooks -->
 <SidebarModal
     on:close={() => {
-        if (confirm('Are you sure you want to discard this habit?')) habit = undefined;
+        if (confirm('Are you sure you want to discard your changes?')) habit = undefined;
     }}
 >
     {#if habit != undefined}

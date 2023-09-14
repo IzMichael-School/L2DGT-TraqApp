@@ -26,7 +26,7 @@
 <!-- Sidebar wrapper, with bg, container, and interaction hooks -->
 <SidebarModal
     on:close={() => {
-        if (confirm('Are you sure you want to discard this task?')) task = undefined;
+        if (confirm('Are you sure you want to discard your changes?')) task = undefined;
     }}
 >
     {#if task != undefined}
