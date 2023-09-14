@@ -25,7 +25,11 @@
 <div class="flex-1" />
 
 <!-- Sidebar wrapper, with bg, container, and interaction hooks -->
-<SidebarModal on:close={() => (habit = undefined)}>
+<SidebarModal
+    on:close={() => {
+        if (confirm('Are you sure you want to discard this habit?')) habit = undefined;
+    }}
+>
     {#if habit != undefined}
         <!-- Modal Title -->
         <h1 class="mb-3 text-xl font-bold">Editing Habit</h1>
