@@ -76,6 +76,7 @@
                     return;
                 }
                 await pb.collection('users').update(profile.id, profile);
+                errormsg = '';
                 profileSaving = false;
             }}
         >
