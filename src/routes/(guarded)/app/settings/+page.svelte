@@ -81,10 +81,10 @@
         >
             {profileSaving ? 'Saving...' : 'Save Changes'}
         </Button>
-        {#if errormsg.length > 0}
-            <p class="mt-1 w-full text-right text-red-500">{errormsg}</p>
-        {/if}
     </div>
+    {#if errormsg.length > 0}
+        <p class="mt-1 w-full text-right text-red-500">{errormsg}</p>
+    {/if}
 </div>
 
 <div class="mt-4 w-full rounded-xl bg-white p-2 pl-4 shadow-lg lg:mt-4 lg:px-5 lg:pt-4 lg:pb-5">
