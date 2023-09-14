@@ -156,7 +156,7 @@
                 class="flex-1 bg-red-700 text-white hover:brightness-90"
                 on:click={() => {
                     // Confirm the discarding
-                    if (!confirm('Are you sure you want to discard this task?')) return;
+                    if (!confirm('Are you sure you want to discard your changes?')) return;
                     // Clear editing selection and changes
                     task = undefined;
                 }}
