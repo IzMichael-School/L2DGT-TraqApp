@@ -37,10 +37,10 @@ export const actions: Actions = {
                 ...data,
                 dateFormat: 'DD/MM/YYYY HH:mm',
             });
-            // Send verification email
-            await locals.pb.collection('users').requestVerification(data.email);
             // Log user in with specified credentials
             const user = await locals.pb.collection('users').authWithPassword(data.email, data.password);
+            // Send verification email
+            await locals.pb.collection('users').requestVerification(data.email);
             // Create the user a default workspace
             await locals.pb.collection('workspaces').create({
                 owner: user.record.id,
