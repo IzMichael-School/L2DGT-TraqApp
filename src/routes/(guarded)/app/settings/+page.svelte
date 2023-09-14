@@ -15,6 +15,7 @@
     import { onMount } from 'svelte';
     let profile: User = {},
         profileSaving = false,
+        errormsg = '',
         passwordReset = false;
 
     onMount(() => {
@@ -64,12 +65,25 @@
             on:click={async () => {
                 if (profileSaving) return;
                 profileSaving = true;
+                if (profile.username.length < 5) {
+                    profileSaving = false;
+                    errormsg = 'Username cannot be shorter than 5 characters';
+                    return;
+                }
+                if (profile.username.length > 32) {
+                    profileSaving = false;
+                    errormsg = 'Username cannot be longer than 32 characters';
+                    return;
+                }
                 await pb.collection('users').update(profile.id, profile);
                 profileSaving = false;
             }}
         >
             {profileSaving ? 'Saving...' : 'Save Changes'}
         </Button>
+        {#if errormsg.length > 0}
+            <p class="mt-1 w-full text-right text-red-500">{errormsg}</p>
+        {/if}
     </div>
 </div>
 

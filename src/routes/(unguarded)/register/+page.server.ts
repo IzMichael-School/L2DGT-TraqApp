@@ -17,6 +17,10 @@ export const actions: Actions = {
         // Validation
         // Ensure username is not an email address
         if (isEmail(data.username)) return fail(400, { error: 'Username cannot be an email address.' });
+        // Ensure username is longer than 5
+        if (data.username.length < 5) return fail(400, { error: 'Username cannot be shorter than 5 characters.' });
+        // Ensure username is longer than 5
+        if (data.username.length > 32) return fail(400, { error: 'Username cannot be longer than 32 characters.' });
         // Ensure email address is a valid email address
         if (!isEmail(data.email)) return fail(400, { error: 'Invalid email address. Check the formatting.' });
         // Ensure both password input have been filled
