@@ -25,7 +25,6 @@ async function init() {
         workspace.set(workspaces[0]);
     }
 }
-init();
 
 // Subscribe to changes in the selected workspace, update the $workspaces store with said changes
 workspace.subscribe(async (val) => {
@@ -218,3 +217,6 @@ function genId(length = 15) {
     }
     return result;
 }
+
+// Run init function to find workspace
+init();
