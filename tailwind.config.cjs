@@ -17,6 +17,9 @@ module.exports = {
             boxShadow: {
                 'elevate': '0 0 20px 10px rgb(0, 0, 0, 0.15)',
                 'elevate-sm': '0 0 10px 5px rgb(0, 0, 0, 0.15)'
+            },
+            height: {
+                'screen': '100dvh'
             }
         },
         fontFamily: {

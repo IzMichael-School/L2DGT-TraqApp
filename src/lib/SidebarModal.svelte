@@ -12,7 +12,7 @@
 
 <!-- Wrapper for a sidebar modal, includes fly in/out animation, close button -->
 <div
-    class="z-[110] flex h-full max-h-full w-full flex-col items-end justify-start overflow-auto rounded-lg bg-white p-5 lg:w-1/3"
+    class="z-[110] flex h-full max-h-full w-full flex-col items-end justify-start overflow-auto rounded-t-3xl bg-white p-5 lg:w-1/3 lg:rounded-lg"
     transition:fly={{ x: 500, duration: 600 }}
 >
     <!-- Close button, exact method controlled on use -->

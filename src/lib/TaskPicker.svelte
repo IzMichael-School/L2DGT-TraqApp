@@ -36,7 +36,7 @@
     <!-- Dim the rest of the screen -->
     <ModalDimmer on:close={() => (showPicker = false)}>
         <div
-            class="relative z-[110] flex h-full w-full flex-col items-center justify-start rounded-lg bg-white p-5 lg:h-2/3 lg:w-2/3"
+            class="relative z-[110] flex h-full w-full flex-col items-center justify-start  rounded-t-3xl bg-white p-5 lg:h-2/3 lg:w-2/3 lg:rounded-lg"
         >
             <!-- Modal title -->
             <h1 class="mb-5 w-full text-center text-xl font-bold">Selecting Task</h1>

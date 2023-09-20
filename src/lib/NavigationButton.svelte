@@ -15,7 +15,7 @@
 
 <!-- Button to go in navbar, executes custom click event, uses props -->
 <button
-    class="group flex aspect-square flex-col items-center justify-center p-2 text-lg max-lg:h-full lg:w-full"
+    class="group ml-1 flex aspect-square flex-col items-center justify-center p-2 text-lg max-lg:h-full lg:ml-0 lg:w-full"
     class:active
     style="--color: {colors[colorname]}; --default: {colors.paleblue};"
     on:click={() => dispatch('click')}

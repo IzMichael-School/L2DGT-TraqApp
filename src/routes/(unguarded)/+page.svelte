@@ -15,11 +15,11 @@
 </svelte:head>
 
 <!-- Hero section -->
-<section class="flex h-screen w-full flex-col items-center justify-center" bind:clientHeight={vh}>
+<section class="flex h-screen w-full flex-col items-center justify-center bg-zinc-50" bind:clientHeight={vh}>
     <!-- Headings -->
     <h1 class="w-full text-center text-4xl font-semibold lg:text-7xl">Take control of your life,</h1>
     <h1 class="w-full text-center text-4xl font-semibold text-brand-blue lg:text-7xl">with Traq.</h1>
-    <h3 class="mt-7 w-2/3 text-center text-lg lg:text-2xl">
+    <h3 class="mt-7 w-2/3 text-center lg:text-2xl">
         Turn your disorganised life into something perfectly planned, and track it all!
     </h3>
 
@@ -132,9 +132,9 @@
 </section>
 
 <!-- CTA Section -->
-<section class="flex h-[25vh] w-full flex-col items-center justify-center bg-zinc-100 lg:mt-[5vh] lg:h-[50vh]">
+<section class="flex h-[50vh] w-full flex-col items-center justify-center bg-zinc-100 lg:mt-[5vh] lg:h-[50vh]">
     <h1 class="text-3xl font-semibold lg:text-7xl">Interested?</h1>
-    <h1 class="mt-2 mb-4 text-3xl font-semibold text-brand-blue lg:text-7xl">Get Tracking!</h1>
+    <h1 class="mt-2 mb-4 text-3xl font-semibold text-brand-blue lg:text-7xl">Get Traqing!</h1>
 
     <!-- CTA buttons -->
     <div class="mt-3 flex w-full flex-row items-center justify-start gap-3 px-5 lg:mt-7 lg:w-1/3 lg:px-0">
@@ -145,9 +145,7 @@
 
 <!-- Copyright footer -->
 <section class="flex h-[5vh] w-full flex-row items-center justify-between px-4">
-    <a class="cursor-pointer text-lg font-bold hover:underline" href="https://izmichael.com">
-        &copy; IzMichael 2023 - izmichael.com
-    </a>
+    <a class="cursor-pointer hover:underline" href="https://izmichael.com">&copy; IzMichael 2023 - izmichael.com</a>
 </section>
 
 <style>

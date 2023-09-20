@@ -24,10 +24,16 @@
 
 <div class="flex h-full w-full flex-col items-center justify-start">
     <div class="mb-3 w-full rounded-xl bg-white p-2 shadow-lg lg:mb-7 lg:p-3">
-        <h1 class="w-full text-center text-3xl font-bold lg:text-left">Welcome Back, {$currentUser?.username}</h1>
+        <h1 class="w-full text-center text-2xl font-bold lg:text-left lg:text-3xl">
+            Welcome Back, {$currentUser?.username}
+        </h1>
     </div>
 
-    <div class="flex h-full w-full flex-col items-center justify-start gap-3 lg:grid lg:grid-cols-3 lg:gap-7">
+    <div
+        class="flex h-full w-full flex-col items-center justify-start gap-3 {$workspace
+            ? 'lg:grid lg:grid-cols-3 lg:gap-7'
+            : ''}"
+    >
         {#if $workspace}
             <div class="w-full rounded-xl bg-white p-2 pl-4 shadow-lg lg:h-full lg:px-5 lg:py-2">
                 <h2 class="mt-2 mb-4 text-xl font-bold">Workspace Statistics</h2>
@@ -71,7 +77,15 @@
                 {/each}
             </div>
         {:else}
-            <p>Loading Workspace...</p>
+            <div class="mb-3 w-full rounded-xl bg-white p-2 shadow-lg lg:mb-7 lg:p-3">
+                <p>Loading Workspace...</p>
+                <br />
+                <p>
+                    Having trouble? <a href="/app" data-sveltekit-reload class="text-blue-500 hover:underline">
+                        Click here to refresh.
+                    </a>
+                </p>
+            </div>
         {/if}
     </div>
 </div>
