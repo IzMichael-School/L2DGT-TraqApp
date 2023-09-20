@@ -3,6 +3,7 @@
     import { color, multiSorter } from '$lib/lib';
     import { currentUser, workspace } from '$lib/pocketbase';
     import { flip } from 'svelte/animate';
+    import { browser } from '$app/environment';
     import dayjs from 'dayjs';
 
     // Set colour of dashboard to lavender
@@ -25,7 +26,9 @@
 <div class="flex h-full w-full flex-col items-center justify-start">
     <div class="mb-3 w-full rounded-xl bg-white p-2 shadow-lg lg:mb-7 lg:p-3">
         <h1 class="w-full text-center text-2xl font-bold lg:text-left lg:text-3xl">
-            Welcome Back, {$currentUser?.username}
+            Welcome{browser && window.location?.search.includes('first=true') ? '' : ' Back'}{$currentUser?.username
+                ? ', ' + $currentUser.username
+                : '!'}
         </h1>
     </div>
 

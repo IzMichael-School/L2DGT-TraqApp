@@ -71,6 +71,6 @@ export const actions: Actions = {
         }
 
         // Redirect the newly authenticated user to the auth state checker redirect
-        throw redirect(303, '/redirect');
+        throw redirect(303, '/app?first=true');
     },
 };
