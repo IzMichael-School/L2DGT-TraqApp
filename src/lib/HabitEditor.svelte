@@ -77,7 +77,9 @@
                     ? 'flex-1'
                     : ''} max-h-6 overflow-hidden overflow-ellipsis transition-all duration-300 ease-in-out"
             >
-                {habit.frequency.start ? dayjs(habit.frequency.start).format('dddd, DD MMMM YYYY') : 'Open Date Picker'}
+                {habit.frequency.start
+                    ? dayjs(habit.frequency.start).format('dddd, DD MMMM YYYY')
+                    : 'Open Calendar Picker'}
             </p>
             <img src="/assets/icons/arrow-up.svg" alt="Arrow Pointing Right" class="ml-1 h-6 w-6 rotate-90" />
         </button>
