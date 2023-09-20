@@ -2,7 +2,6 @@
     // Import libraries, stores
     import { applyAction, enhance } from '$app/forms';
     import { pb } from '$lib/pocketbase';
-    import { goto } from '$app/navigation';
 
     // Import active form data for progressive enchancement
     export let form;
@@ -12,6 +11,7 @@
         loading = false;
 
     // Import custom components
+    import UnauthedNavbar from '$lib/UnauthedNavbar.svelte';
     import Button from '$lib/Button.svelte';
     import TextInput from '$lib/TextInput.svelte';
     import PasswordStrength from '$lib/PasswordStrength.svelte';
@@ -22,25 +22,13 @@
     <title>Register | Traq</title>
 </svelte:head>
 
-<div class="h-full max-h-full overflow-auto">
-    <!-- Button to return to home page -->
-    <button
-        class="mx-auto mt-10 mb-5 flex flex-row items-center justify-start rounded-lg bg-brand-paleblue p-2 lg:absolute lg:top-0 lg:left-0 lg:mx-10"
-        on:click={() => goto('/')}
-    >
-        <img
-            src="/assets/icons/chevron-up.svg"
-            alt="Arrow Pointing Left"
-            class="aspect-square h-8 w-8 -rotate-90 rounded-lg invert"
-        />
-        <h1 class="mx-2 text-xl font-bold text-white lg:pb-1">Back to Home</h1>
-        <img src="/favicon.png" alt="Traq Logo" class="aspect-square h-8 w-8 rounded-lg" />
-    </button>
+<div class="mx-auto flex h-full max-h-full w-full flex-col items-center justify-start overflow-auto px-5 pb-5 lg:w-3/5">
+    <UnauthedNavbar />
 
     <!-- Register form -->
     <form
         method="POST"
-        class="mx-auto flex w-full flex-col items-center justify-center overflow-auto px-5 pt-5 lg:h-full lg:w-1/2"
+        class="flex w-full flex-col items-center justify-start p-5 lg:flex-1 lg:p-0"
         use:enhance={() => {
             // Load auth from cookie, apply return state action
             return async ({ result }) => {
@@ -115,4 +103,9 @@
             <p class="mt-5 w-full text-center font-bold text-red-700">{form.error}</p>
         {/if}
     </form>
+
+    <!-- Copyright footer -->
+    <a class="w-full cursor-pointer text-center hover:underline" href="https://izmichael.com">
+        &copy; IzMichael 2023 - izmichael.com
+    </a>
 </div>
