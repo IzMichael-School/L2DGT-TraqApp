@@ -1,6 +1,6 @@
 // Import libraries
 import PocketBase from 'pocketbase';
-import { writable } from 'svelte/store';
+import { writable, type Unsubscriber } from 'svelte/store';
 import dayjs from 'dayjs';
 
 // Establish connection with the database
@@ -15,6 +15,7 @@ export const workspace = writable<Workspace>();
 export const saving = writable<false | 'working' | 'failed'>(false);
 
 // Runs on app load, selects a workspace and subscribes to changes in the current user's record
+let userunsub: Unsubscriber;
 async function init() {
     if (pb.authStore.model?.id) {
         pb.collection('users').subscribe(pb.authStore.model.id, (e) => {
@@ -23,6 +24,13 @@ async function init() {
 
         const workspaces = await pb.collection('workspaces').getFullList<Workspace>();
         workspace.set(workspaces[0]);
+    } else {
+        userunsub = currentUser.subscribe(async (e) => {
+            if (e?.id) {
+                userunsub();
+                init();
+            }
+        });
     }
 }
 
