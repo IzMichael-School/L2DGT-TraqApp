@@ -13,7 +13,7 @@
     // Declare variables, import database library
     import { pb, currentUser, type User } from '$lib/pocketbase';
     import { onMount } from 'svelte';
-    let profile: User = {},
+    let profile: User = {} as User,
         profileSaving = false,
         errormsg = '',
         passwordReset = false;
