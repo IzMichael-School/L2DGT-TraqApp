@@ -42,7 +42,10 @@
         </div>
         <!-- Copyright footer -->
         <a
-            class="w-full shrink-0 cursor-pointer pt-1 text-right text-xs font-bold text-white hover:underline"
+            class="w-full shrink-0 cursor-pointer pt-1 text-right text-xs font-bold hover:underline {$color ==
+            'lavender'
+                ? 'text-black'
+                : 'text-white'}"
             href="https://izmichael.com"
         >
             &copy; IzMichael 2023 - izmichael.com
