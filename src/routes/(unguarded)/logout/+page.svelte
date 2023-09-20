@@ -4,6 +4,8 @@
 
     // Run when page loaded
     onMount(() => {
+        // Delete the saved login
+        document.cookie = 'pb_auth=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
         // Redirect to home page
         window.location.href = '/';
     });
