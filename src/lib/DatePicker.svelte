@@ -111,7 +111,7 @@
 />
 
 <!-- Wrapper for the picker -->
-<div class="wrapper flex h-[20rem] w-fit shrink-0 flex-col items-center justify-center overflow-hidden bg-white">
+<div class="wrapper flex h-[22.6rem] w-fit shrink-0 flex-col items-center justify-center overflow-hidden bg-white">
     <div class="flex max-h-full w-full flex-row items-center justify-center overflow-hidden">
         <!-- Date Picker -->
         <div class="dateWrapper flex h-full flex-col items-center justify-start">
@@ -250,7 +250,7 @@
     <div
         class="flex w-full items-center justify-between bg-zinc-200 {time
             ? 'h-16 flex-row py-1 pl-3 pr-1'
-            : 'h-[4.9rem] flex-col gap-2 px-1 pb-1 pt-2'}"
+            : 'h-[7.3rem] flex-col gap-2 px-1 pb-1 pt-2'}"
     >
         <!-- Currently selected value of picker -->
         <p class="mr-2 flex-1 font-bold">
