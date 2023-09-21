@@ -39,7 +39,7 @@
         >
             {tasklist.name}
         </h2>
-        <div id="tasks" class="contents">
+        <div id="tasks-{tasklist.id}" class="contents">
             <!-- List each top-level task in tasklist using TaskItem component -->
             {#each $workspace.tasks
                 .filter((t) => !t.parent && t.list == tasklist.id)

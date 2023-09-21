@@ -53,6 +53,7 @@
 
 <div
     class="group my-1 flex h-11 w-full flex-row items-center justify-start gap-3 py-1 px-2"
+    id="taskitem-{task.id}"
     bind:this={element}
     on:contextmenu|preventDefault={() => {
         if (noninteractive) return false;

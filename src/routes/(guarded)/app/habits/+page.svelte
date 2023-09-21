@@ -72,12 +72,14 @@
         </div>
 
         {#if $workspace?.id}
-            <!-- List habits with HabitItem component -->
-            {#each $workspace.habits.sort((a, b) => (a.name > b.name ? 1 : -1)) as habit (habit.id)}
-                <HabitItem {habit} {weekstart} on:edit={(e) => (editingHabit = structuredClone(e.detail.habit))} />
-            {:else}
-                <p class="mb-1">Looks like you're not tracking any habits...</p>
-            {/each}
+            <div id="habits" class="contents">
+                <!-- List habits with HabitItem component -->
+                {#each $workspace.habits.sort((a, b) => (a.name > b.name ? 1 : -1)) as habit (habit.id)}
+                    <HabitItem {habit} {weekstart} on:edit={(e) => (editingHabit = structuredClone(e.detail.habit))} />
+                {:else}
+                    <p class="mb-1">Looks like you're not tracking any habits...</p>
+                {/each}
+            </div>
 
             <!-- Add ends of bordered columns -->
             <div class="flex w-full flex-row items-center justify-between lg:justify-start lg:gap-5">

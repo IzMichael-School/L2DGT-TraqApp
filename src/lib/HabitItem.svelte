@@ -51,6 +51,7 @@
     class="group flex w-full items-center justify-start lg:h-[3.25rem] {single
         ? 'flex-row-reverse'
         : 'flex-col lg:flex-row'}"
+    id="habititem-{habit.id}"
     bind:this={element}
     on:contextmenu|preventDefault={() => {
         if (!$poppedup) (showMenu = true), ($poppedup = true);
