@@ -1,7 +1,7 @@
 <script lang="ts">
     // Import libraries, stores, types
     import { color, multiSorter } from '$lib/lib';
-    import { currentUser, workspace } from '$lib/pocketbase';
+    import { currentUser, pb, workspace } from '$lib/pocketbase';
     import { flip } from 'svelte/animate';
     import { browser } from '$app/environment';
     import dayjs from 'dayjs';
@@ -12,10 +12,14 @@
     // Import Components
     import TaskItem from '$lib/TaskItem.svelte';
     import HabitItem from '$lib/HabitItem.svelte';
+    import Button from '$lib/Button.svelte';
 
     // Get day of week for habit dashboard
     let dayofweek = dayjs().day();
     let weekstart = dayjs().startOf('week');
+
+    // Status of verification email sending
+    let verificationSent = false;
 </script>
 
 <!-- Set page title to Home -->
@@ -38,20 +42,45 @@
             : ''}"
     >
         {#if $workspace}
-            <div class="w-full rounded-xl bg-white p-2 pl-4 shadow-lg lg:h-full lg:px-5 lg:py-2">
-                <h2 class="mt-2 mb-4 text-xl font-bold">Workspace Statistics</h2>
-                <p class="mb-4 text-base lg:text-xl">
-                    <b>Tasks Created:</b>
-                    {$workspace.statistics.tasks.created}
-                </p>
-                <p class="mb-4 text-base lg:text-xl">
-                    <b>Tasks Completed:</b>
-                    {$workspace.statistics.tasks.completed}
-                </p>
-                <p class="mb-4 text-base lg:text-xl">
-                    <b>Habits Completed:</b>
-                    {$workspace.statistics.habits.completed}
-                </p>
+            <div class="flex h-full w-full flex-col items-center justify-start">
+                {#if !$currentUser?.verified}
+                    <div
+                        class="mb-3 flex w-full flex-row items-center justify-start rounded-xl border-4 border-yellow-400 bg-white p-2 text-black shadow-md lg:mb-7 lg:px-5 lg:py-2"
+                    >
+                        <span class="mr-2 text-4xl font-bold lg:mr-5">!</span>
+                        <div class="flex flex-1 flex-col items-start justify-center">
+                            <h2 class="text-lg font-bold">Your email is not verified</h2>
+                            <p class="text-sm">You will not be able to change your password until you verify.</p>
+                            <Button
+                                on:click={async () => {
+                                    if (verificationSent) return;
+                                    pb.collection('users').requestVerification($currentUser.email);
+                                    verificationSent = true;
+                                }}
+                                class="mt-3 w-full bg-yellow-400 hover:bg-yellow-300"
+                                variant="unstyled"
+                            >
+                                {verificationSent ? 'Done! Check your email inbox.' : 'Resend Verification Email'}
+                            </Button>
+                        </div>
+                    </div>
+                {/if}
+
+                <div class="w-full rounded-xl bg-white p-2 pl-4 shadow-lg lg:flex-1 lg:px-5 lg:py-2">
+                    <h2 class="mt-2 mb-4 text-xl font-bold">Workspace Statistics</h2>
+                    <p class="mb-4 text-base lg:text-xl">
+                        <b>Tasks Created:</b>
+                        {$workspace.statistics.tasks.created}
+                    </p>
+                    <p class="mb-4 text-base lg:text-xl">
+                        <b>Tasks Completed:</b>
+                        {$workspace.statistics.tasks.completed}
+                    </p>
+                    <p class="mb-4 text-base lg:text-xl">
+                        <b>Habits Completed:</b>
+                        {$workspace.statistics.habits.completed}
+                    </p>
+                </div>
             </div>
 
             <div class="w-full rounded-xl bg-white p-2 shadow-lg lg:h-full lg:p-3">

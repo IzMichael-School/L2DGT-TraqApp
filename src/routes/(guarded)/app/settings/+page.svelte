@@ -16,6 +16,7 @@
     let profile: User = {} as User,
         profileSaving = false,
         errormsg = '',
+        verificationSent = false,
         passwordReset = false;
 
     onMount(() => {
@@ -92,6 +93,29 @@
     <!-- Section title -->
     <h2 class="mb-1 text-lg font-bold lg:mb-4 lg:text-2xl">Account</h2>
 
+    {#if !$currentUser?.verified}
+        <div
+            class="mb-4 flex w-full flex-row items-center justify-start rounded-xl bg-yellow-400 p-2 text-black shadow-md lg:px-5 lg:py-2"
+        >
+            <span class="mr-2 text-4xl font-bold lg:mr-5">!</span>
+            <div class="flex flex-1 flex-col items-start justify-center">
+                <h2 class="text-lg font-bold">Your email is not verified</h2>
+                <p class="text-sm">You will not be able to change your password until you verify.</p>
+                <Button
+                    on:click={async () => {
+                        if (verificationSent) return;
+                        pb.collection('users').requestVerification($currentUser.email);
+                        verificationSent = true;
+                    }}
+                    class="mt-3 w-full bg-yellow-300 hover:bg-yellow-200"
+                    variant="unstyled"
+                >
+                    {verificationSent ? 'Done! Check your email inbox.' : 'Resend Verification Email'}
+                </Button>
+            </div>
+        </div>
+    {/if}
+
     <!-- Email input -->
     <p class="ml-1 mt-5 w-full text-left text-base font-semibold text-black">Email</p>
     <div class="flex w-full flex-row items-center justify-between rounded-lg bg-gray-100 p-2">
@@ -108,6 +132,7 @@
             passwordReset = true;
         }}
     >
+        <!-- TODO: Error when email is unverified -->
         {passwordReset ? 'Done! Check your email inbox to change your password.' : 'Change my Password'}
     </Button>
 </div>
