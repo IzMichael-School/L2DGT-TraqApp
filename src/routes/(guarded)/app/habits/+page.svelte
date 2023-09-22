@@ -46,7 +46,7 @@
 {#if weekstart}
     <section class="contents">
         <h2 class="mb-1 text-lg font-bold lg:-mb-8 lg:text-2xl">
-            This Week ({weekstart.format('D MMM')} - {weekstart.add(7, 'day').format('D MMM')})
+            This Week ({weekstart.format('D MMM')} - {weekstart.add(6, 'day').format('D MMM')})
         </h2>
         <div class="flex w-full flex-row items-end justify-between lg:justify-start lg:gap-5">
             <span class="hidden h-0 w-1/2 lg:block" />
